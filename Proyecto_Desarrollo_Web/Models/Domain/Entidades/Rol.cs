@@ -18,5 +18,25 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
             ModulosRoles = new HashSet<ModulosRoles>();
             Usuarios = new HashSet<Usuario>();
         }
+        public static Rol Create(string Descripcion, string Descripcion2)
+        {
+            return new Rol
+            {
+                Descripcion = Descripcion,
+                Descripcion2 = Descripcion2,
+                Id = Guid.NewGuid(),
+                CreatedDate = DateTime.Now
+            };
+        }
+        public void Update(string Descripcion, string Descripcion2)
+        {
+            this.Descripcion = Descripcion;
+            this.Descripcion2 = Descripcion2;
+
+        }
+        public void Delete()
+        {
+            this.Eliminado = true;
+        }
     }
 }

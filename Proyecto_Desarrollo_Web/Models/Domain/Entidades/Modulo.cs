@@ -19,5 +19,33 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
         {
             ModulosRoles = new HashSet<ModulosRoles>();
         }
+        public static Modulo Create(string nombre, string metodo, string controller, Guid createdBy, DateTime createdDate,
+                                   Guid agrupadoModulosId)
+        {
+            return new Modulo
+            {
+                Nombre = nombre,
+                Metodo = metodo,
+                Id = Guid.NewGuid(),
+                Controller = controller,
+                CreatedBy = createdBy,
+                CreatedDate = createdDate,
+                AgrupadoModulosId = agrupadoModulosId
+            };
+        }
+        public void Update(string nombre, string metodo, string controller, Guid createdBy, DateTime createdDate,
+                                    Guid agrupadoModulosId)
+        {
+            this.Nombre = nombre;
+            this.Metodo = metodo;
+            this.Controller = controller;
+            this.CreatedBy = createdBy;
+            this.CreatedDate = createdDate;
+            this.AgrupadoModulosId = agrupadoModulosId;
+        }
+        public void Delete()
+        {
+            this.Eliminado = true;
+        }
     }
 }

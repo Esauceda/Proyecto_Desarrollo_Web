@@ -18,6 +18,7 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Config
                 builder.Property(c => c.Correo).HasColumnType("varchar(100)").HasColumnName("Correo");
                 builder.Property(d => d.DNI).HasColumnType("varchar(100)").HasColumnName("DNI");
                 builder.Property(d => d.Direccion).HasColumnType("varchar(100)").HasColumnName("Direccion");
+                builder.Property(d => d.token_recovery).HasColumnType("varchar(200)").HasColumnName("token_recovery");
             }
         }
 

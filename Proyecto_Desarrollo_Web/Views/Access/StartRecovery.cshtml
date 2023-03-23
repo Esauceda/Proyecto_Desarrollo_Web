@@ -1,0 +1,29 @@
+﻿@using Proyecto_Desarrollo_Web.Models.ViewModel;
+@model RecoveryVm
+
+@{
+    ViewData["Title"] = "StartRecovery";
+}
+@if (!string.IsNullOrEmpty(@ViewBag.Error))
+{
+            <div class="@ViewBag.ClaseMensaje" role="alert" id="success-alert">
+                <strong> @ViewBag.Error</strong>
+            </div>
+}
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <div class="form-style">
+            <form action="@Url.Content("~/Access/StartRecovery")" method="post">
+
+                <label> Escribe tu correo electronico</label>
+                @Html.TextBoxFor(e=>e.Correo,null,new{ @class="form-control"})
+                @Html.ValidationMessageFor(e=>e.Correo,null,new { style="color-red"})
+                <br/>
+                <div class="text-right">
+                    <button class="btn btn-primary"> Recuperar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

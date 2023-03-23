@@ -16,6 +16,7 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
         public string Correo { get; set; }
         public string DNI { get; set; }
         public string Direccion { get; set; }
+        public string token_recovery { get; set; }
         public bool Eliminado { get; set; }
         public Guid CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

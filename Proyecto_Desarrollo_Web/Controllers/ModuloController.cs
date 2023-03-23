@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using Proyecto_Desarrollo_Web.Models.Domain.Entidades;
+using Proyecto_Desarrollo_Web.Filters;
 
 namespace Proyecto_Desarrollo_Web.Controllers
 {
@@ -22,12 +23,14 @@ namespace Proyecto_Desarrollo_Web.Controllers
             _context = context;
         }
         [HttpGet]
+        [ClaimRequirement("Modulo")]
         public IActionResult Index()
         {
             var listamodulos = _context.Modulo.Where(w => w.Eliminado == false).ProjectToType<ModuloVm>().ToList();
             return View(listamodulos);
         }
         [HttpGet]
+        [ClaimRequirement("Modulo")]
         public IActionResult Insertar()
         {
             var newModulo = new ModuloVm();
@@ -46,6 +49,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
             return View(newModulo);
         }
         [HttpPost]
+        [ClaimRequirement("Modulo")]
         public IActionResult Insertar(ModuloVm newModulo)
         {
             var agrupadoModulos = _context.AgrupadoModulos.Where(w => w.Eliminado == false).ProjectToType<AgrupadoVm>().ToList();
@@ -74,6 +78,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
+        [ClaimRequirement("Modulo")]
         public IActionResult Editar(Guid ModuloId)
         {
             var modulo = _context.Modulo.Where(w => w.Id == ModuloId && w.Eliminado == false).ProjectToType<ModuloVm>().FirstOrDefault();
@@ -91,6 +96,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
             return View(modulo);
         }
         [HttpPost]
+        [ClaimRequirement("Modulo")]
         public IActionResult Editar(ModuloVm newModulo)
         {
             var agrupadoModulos = _context.AgrupadoModulos.Where(w => w.Eliminado == false).ProjectToType<AgrupadoVm>().ToList();
@@ -119,6 +125,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
+        [ClaimRequirement("Modulo")]
         public IActionResult Eliminar(Guid ModuloId)
         {
             var modulo = _context.Modulo.Where(w => w.Id == ModuloId && w.Eliminado == false).ProjectToType<ModuloVm>().FirstOrDefault();
@@ -126,6 +133,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
 
         }
         [HttpPost]
+        [ClaimRequirement("Modulo")]
         public IActionResult Eliminar(ModuloVm newModulo)
         {
             var validacion = newModulo.ValidarEliminar();

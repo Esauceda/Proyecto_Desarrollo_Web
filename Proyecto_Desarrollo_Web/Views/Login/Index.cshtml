@@ -13,17 +13,20 @@
             <strong> @ViewBag.Error</strong>
         </div>
     }
-    <div class="main">
 
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Loginstyle.css"/>
+</head>
+    <body>
         <div class="login">
-            <div class="inset">
                 <form method="post" asp-action="Index">
-                    <div>
+                    <h1>Login Usuario</h1>
+                    <div class="text">
                         <label asp-for="Username" class="control-label"></label>
                         <input asp-for="Username" class="form-control" />
                         <span asp-validation-for="Username" class="text-danger"></span>
                     </div>
-                    <div>
+                    <div class="text">
                         <label asp-for="Password" class="control-label"></label>
                         <input asp-for="Password" class="form-control" />
                         <span asp-validation-for="Password" class="text-danger" t></span>
@@ -35,12 +38,11 @@
                         </div>
                         <div class="clear"><br /><br /></div>
                     </div>
-                    <div>
+                    <div class="recovery">
                         @Html.ActionLink("Olvidaste tu password?","StartRecovery","Access")
                     </div>
 
                 </form>
             </div>
-        </div>
-    </div>
+     </body>
 </div>

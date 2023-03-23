@@ -9,10 +9,10 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
     {
         public Guid UsuarioId { get; set; }
         public string Username { get; set; }
-        [Required(ErrorMessage = "La contraseña es campo obligatorio")]
+        [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Required(ErrorMessage = "El usuario es campo obligatorio")]
+        [Required]
         public string Nombre { get; set; }
         public string Telefono { get; set; }
         public string Correo { get; set; }

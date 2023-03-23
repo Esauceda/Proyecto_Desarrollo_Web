@@ -5,28 +5,30 @@
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
-    @if (!string.IsNullOrEmpty(@ViewBag.Error))
-    {
-        <div class="@ViewBag.ClaseMensaje" role="alert" id="success-alert">
-            <strong> @ViewBag.Error</strong>
-        </div>
-    }
-<div class="row">
+@if (!string.IsNullOrEmpty(@ViewBag.Error))
+{
+    <div class="@ViewBag.ClaseMensaje" role="alert" id="success-alert">
+        <strong> @ViewBag.Error</strong>
+    </div>
+}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Recovery.css" />
+</head>
+<div class="main">
     <div class="col-md-6 offset-3">
         <div class="form-style">
             <form method="post" asp-action="Recovery">
 
                 @Html.HiddenFor(d=>d.token)
-                <label>Escribe tu nueva contraseña</label>
+                <label class="Title">Escribe tu nueva contraseña</label>
                 @Html.PasswordFor(d=>d.Password,new{@class="form-control"})
-                @Html.ValidationMessageFor(d=>d.Password,null,new {style = "color:red"})
 
-                <label>Ingresa nuevamente tu contraseña</label>
+                <label class="Title">Ingresa nuevamente tu contraseña</label>
                 @Html.PasswordFor(d=>d.Password2,new{@class="form-control"})
-                @Html.ValidationMessageFor(d=>d.Password2,null,new {style = "color:red"})
                 <br />
                  <div class="text-left">
-                     <button type ="submit" class="btn btn-primary">Recuperar</button>
+                    <button type="submit" class="boton">Recuperar</button>
                  </div>
             </form>
         </div>

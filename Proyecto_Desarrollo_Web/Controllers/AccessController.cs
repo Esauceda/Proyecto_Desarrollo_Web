@@ -110,8 +110,8 @@ namespace Proyecto_Desarrollo_Web.Controllers
         #region HELPERS
         private void SendEmail(string EmailDestino, string token)
         {
-            string EmailOrigen = /*"Aqui va el correo"*/"eduardo.sauceda@ujcv.edu.hn";
-            string password = /*"Aqui va la contra de su correo"*/"2019110256";
+            string EmailOrigen = /*"Aqui va el correo"*/"";
+            string password = /*"Aqui va la contra de su correo"*/"";
             string url = urlDomain + "Access/Recovery/?token=" + token;
 
             MailMessage oMailMessage = new MailMessage(EmailOrigen, EmailDestino, "Recuperacion de contraseña",

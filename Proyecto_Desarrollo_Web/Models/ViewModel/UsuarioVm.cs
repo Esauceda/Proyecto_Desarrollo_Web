@@ -66,10 +66,6 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             {
                 app.Mensaje = "El Username no puede ir vacio. ";
             }
-            if (string.IsNullOrEmpty(this.Password))
-            {
-                app.Mensaje += "La Password no puede ir vacio. ";
-            }
             if (this.UsuarioId == null || this.UsuarioId == Guid.Empty)
             {
                 app.Mensaje += "El UsuarioId no puede ir vacio. ";

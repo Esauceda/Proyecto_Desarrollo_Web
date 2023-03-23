@@ -1,28 +1,49 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+@using Proyecto_Desarrollo_Web.Models.ViewModel;
+@using Newtonsoft.Json;
+@inject IHttpContextAccessor HttpContextAccessor;
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Proyecto_Desarrollo_Web</title>
+    <title>@ViewData["Title"] - Proyecto</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
+        @{
+            var sesionBase64 = HttpContextAccessor.HttpContext.Session.GetString("UsuarioObjeto");
+            var base64EncodedBytes = System.Convert.FromBase64String(sesionBase64);
+            var sesion = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+            UsuarioVm UsuarioObjeto = JsonConvert.DeserializeObject<UsuarioVm>(sesion);
+        }
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Proyecto_Desarrollo_Web</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Login" asp-action="Index">@UsuarioObjeto.Username</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        @foreach (var menu in UsuarioObjeto.Menu)
+                        {
+                            @if (menu.Modulos.Count > 0)
+                            {
+                                @foreach (var submenu in menu.Modulos)
+                                {
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="@submenu.Controller" asp-action="@submenu.Metodo">@submenu.Nombre</a>
+                                    </li>
+                                }
+                            }
+                        }
+                        <li>
+                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CerrarSesion"> Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>
@@ -37,7 +58,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - Proyecto_Desarrollo_Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - Tarea2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

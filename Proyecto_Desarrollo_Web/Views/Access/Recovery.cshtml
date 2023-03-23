@@ -2,6 +2,7 @@
 @model RecoveryPasswordVm
 @{
     ViewData["Title"] = "Recovery";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
     @if (!string.IsNullOrEmpty(@ViewBag.Error))

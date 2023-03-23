@@ -13,8 +13,6 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [Required(ErrorMessage = "El usuario es campo obligatorio")]
-        [EmailAddress(ErrorMessage = "El usuario no es valido")]
-
         public RolVm Rol { get; set; }
         public List<AgrupadoVm> Menu { get; set; }
         public List<SelectListItem> Sucursales { get; set; }

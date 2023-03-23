@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Proyecto_Desarrollo_Web.Filters;
 using Proyecto_Desarrollo_Web.Models;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,18 @@ namespace Proyecto_Desarrollo_Web.Controllers
         {
             _logger = logger;
         }
-
-        public IActionResult Index()
+        [ClaimRequirement("principal")]
+        public IActionResult Index(string Codigo)
         {
+            if (!string.IsNullOrEmpty(Codigo) && Codigo == "1")
+            {
+                ViewBag.Error = "No tiene permisos para este modulo";
+                ViewBag.ClaseMensaje = "alert alert-danger alert-dismissable";
+            }
             return View();
         }
 
+        [ClaimRequirement("principal")]
         public IActionResult Privacy()
         {
             return View();
@@ -32,6 +39,12 @@ namespace Proyecto_Desarrollo_Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult CerrarSesion()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Login");
         }
     }
 }

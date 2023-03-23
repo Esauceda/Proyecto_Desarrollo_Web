@@ -81,9 +81,9 @@ namespace Proyecto_Desarrollo_Web.Controllers
         [ClaimRequirement("Rol")]
         public IActionResult Eliminar(string Id)
         {
-            
+            var Roles = _context.Rol.Where(w => w.Id == new Guid(Id) && w.Eliminado == false).ProjectToType<RolVm>().FirstOrDefault();
 
-            return View();
+            return View(Roles);
         }
         [HttpPost]
         [ClaimRequirement("Rol")]

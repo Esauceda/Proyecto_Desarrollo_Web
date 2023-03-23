@@ -15,5 +15,23 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
         {
             Modulos = new HashSet<Modulo>();
         }
+        public static AgrupadosModulos Create(string Descripcion)
+        {
+            return new AgrupadosModulos
+            {
+                Descripcion = Descripcion,
+                Id = Guid.NewGuid(),
+                CreatedDate = DateTime.Now
+            };
+        }
+        public void Update(string Descripcion)
+        {
+            this.Descripcion = Descripcion;
+
+        }
+        public void Delete()
+        {
+            this.Eliminado = true;
+        }
     }
 }

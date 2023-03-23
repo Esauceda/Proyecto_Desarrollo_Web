@@ -65,13 +65,14 @@ namespace Proyecto_Desarrollo_Web.Controllers
 
             if(token==null || token.Trim().Equals(""))
             {
-                return View("Index");
+                ViewBag.Error = "Seleccione Olvidaste tu password";
+                return RedirectToAction("Index", "Login");
             }
             var user = _context.Usuario.Where(w => w.Eliminado == false && w.token_recovery == recovery.token).FirstOrDefault();
             if(user == null)
             {
                 ViewBag.Error = "Tu token ha expirado";
-                return View("Index");
+                return RedirectToAction("Index", "Login");
             }
             recovery.token = token;
             return View(recovery);
@@ -102,15 +103,15 @@ namespace Proyecto_Desarrollo_Web.Controllers
                 throw new Exception(ex.Message);
             }
             ViewBag.Message = "Contraseña modificada con exito";
-            return RedirectToAction("Index", "Access");
+            return RedirectToAction("Index", "Login");
         }
 
 
         #region HELPERS
         private void SendEmail(string EmailDestino, string token)
         {
-            string EmailOrigen = /*"Aqui va el correo"*/"";
-            string password = /*"Aqui va la contra de su correo"*/"";
+            string EmailOrigen = /*"Aqui va el correo"*/"eduardo.sauceda@ujcv.edu.hn";
+            string password = /*"Aqui va la contra de su correo"*/"2019110256";
             string url = urlDomain + "Access/Recovery/?token=" + token;
 
             MailMessage oMailMessage = new MailMessage(EmailOrigen, EmailDestino, "Recuperacion de contraseña",

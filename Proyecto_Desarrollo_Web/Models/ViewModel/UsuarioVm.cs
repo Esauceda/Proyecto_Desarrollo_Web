@@ -13,9 +13,18 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [Required(ErrorMessage = "El usuario es campo obligatorio")]
+        public string Nombre { get; set; }
+        public string Telefono { get; set; }
+        public string Correo { get; set; }
+        public string DNI { get; set; }
+        public string Direccion { get; set; }
+        public Guid DepartamentoId { get; set; }
+        public DepartamentoVm Departamento { get; set; }
+        public Guid RolId { get; set; }
         public RolVm Rol { get; set; }
+        public List<SelectListItem> Departamentos { get; set; }
         public List<AgrupadoVm> Menu { get; set; }
-        public List<SelectListItem> Sucursales { get; set; }
+        public List<SelectListItem> Rols { get; set; }
         public AppResult ValidarDatosLogin()
         {
             if (string.IsNullOrEmpty(this.Username) || string.IsNullOrEmpty(this.Password))

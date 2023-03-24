@@ -97,6 +97,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
             }
             var RolActual = _context.Rol.FirstOrDefault(w => w.Id == newRol.Id);
             RolActual.Delete();
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
     }

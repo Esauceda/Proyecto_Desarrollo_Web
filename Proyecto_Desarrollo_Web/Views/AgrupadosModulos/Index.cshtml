@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Agrupados Modulos</h1>
 
 <form asp-action="Buscar" method="get">
     <div>
@@ -22,10 +22,6 @@
                 </div>
             }
         </div>
-    </div>
-
-    <div>
-        <input type="submit" value="buscar">
     </div>
 </form>
 <form asp-action="Insertar" method="get">
@@ -45,13 +41,14 @@
         </div>
     </div>
 
-    <div>
-        <input type="submit" value="agregar">
+    <div class="form-group">
+        <input type="submit" value="Agregar" class="btn-success">
     </div>
+
     @if (Model.Count > 0)
     {
         <div class="ScrollB">
-            <table>
+            <table class="table table-bordered table-striped">
                 <tread>
                     <tr>
                         <th>Descripcion</th>

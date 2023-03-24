@@ -38,22 +38,22 @@
             <input asp-for="Id" type="hidden" class="form-control" />
 
             <div class="form-group">
-                <label asp-for="Nombre" class="custom-control-label"></label>
+                <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Metodo" class="custom-control-label"></label>
+                <label asp-for="Metodo" class="control-label"></label>
                 <input asp-for="Metodo" class="form-control" />
                 <span asp-validation-for="Metodo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Controller" class="custom-control-label"></label>
+                <label asp-for="Controller" class="control-label"></label>
                 <input asp-for="Controller" class="form-control" />
                 <span asp-validation-for="Controller" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="AgrupadoModulosId" nam class="custom-control-label">AgrupadoModulos</label>
+                <label for="AgrupadoModulosId" nam class="control-label">AgrupadoModulos</label>
                 @Html.DropDownList("AgrupadoModulosId",Model.AgrupadoModuloss,"Seleccione AgrupadoModulos", new{@class="form-control"})
             </div>
             <div class="form-group">

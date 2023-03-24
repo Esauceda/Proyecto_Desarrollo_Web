@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Modulo</h1>
 
 <form asp-action="Insertar" method="get">
     <div class="row">
@@ -40,7 +40,6 @@
                         <th>Metodo</th>
                         <th>Controller</th>
                         <th>AgrupadoModulos</th>
-                        <th>CreatedDate</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -52,9 +51,8 @@
                             <td>@item.Metodo</td>
                             <td>@item.Controller</td>
                             <td>@item.AgrupadoModulos.Descripcion</td>
-                            <td>@item.CreatedDate</td>
-                            <td>@Html.ActionLink("Editar","Editar","Modulo", new{@ModuloID = item.Id}, new {@class = "btn btn-info"})</td>
-                            <td>@Html.ActionLink("Eliminar","Eliminar","Modulo", new{@ModuloID = item.Id}, new {@class = "btn btn-info"})</td>
+                            <td>@Html.ActionLink("Editar","Editar","Modulo", new{@ModuloID = item.Id}, new {@class = "btn btn-info"})
+                            @Html.ActionLink("Eliminar","Eliminar","Modulo", new{@ModuloID = item.Id}, new {@class = "btn btn-info"})</td>
 
                         </tr>
                     }

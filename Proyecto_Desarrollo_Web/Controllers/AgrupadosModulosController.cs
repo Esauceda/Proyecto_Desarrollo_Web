@@ -97,6 +97,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
             }
             var AgrupadoActual = _context.AgrupadoModulos.FirstOrDefault(w => w.Id == newAgrupados.Id);
             AgrupadoActual.Delete();
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
     }

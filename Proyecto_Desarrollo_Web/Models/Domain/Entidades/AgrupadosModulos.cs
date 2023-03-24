@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
 {
@@ -10,6 +12,9 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
         public bool Eliminado { get; set; }
         public Guid CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        [JsonIgnore]
+        [IgnoreDataMember]
         public ICollection<Modulo> Modulos { get; set; }
         public AgrupadosModulos()
         {

@@ -10,8 +10,8 @@ using Proyecto_Desarrollo_Web.Models.Domain;
 namespace Proyecto_Desarrollo_Web.Migrations
 {
     [DbContext(typeof(ProyectoDBContext))]
-    [Migration("20230323031057_hola")]
-    partial class hola
+    [Migration("20230329055536_compras")]
+    partial class compras
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -136,6 +136,71 @@ namespace Proyecto_Desarrollo_Web.Migrations
                     b.ToTable("ModulosRoles");
                 });
 
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Producto", b =>
+                {
+                    b.Property<Guid>("ProductoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Cantidad")
+                        .HasColumnType("varchar(6)")
+                        .HasColumnName("Cantidad");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("Descripcion");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("varchar(40)")
+                        .HasColumnName("Nombre");
+
+                    b.Property<Guid>("ProveedorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProductoId");
+
+                    b.HasIndex("ProveedorId");
+
+                    b.ToTable("Producto");
+                });
+
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Proveedor", b =>
+                {
+                    b.Property<Guid>("ProveedorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("varchar(40)")
+                        .HasColumnName("Nombre");
+
+                    b.Property<string>("Telefono")
+                        .HasColumnType("varchar(8)")
+                        .HasColumnName("Telefono");
+
+                    b.HasKey("ProveedorId");
+
+                    b.ToTable("Proveedor");
+                });
+
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Rol", b =>
                 {
                     b.Property<Guid>("Id")
@@ -256,6 +321,17 @@ namespace Proyecto_Desarrollo_Web.Migrations
                     b.Navigation("Rol");
                 });
 
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Producto", b =>
+                {
+                    b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Proveedor", "Proveedor")
+                        .WithMany("Productos")
+                        .HasForeignKey("ProveedorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Proveedor");
+                });
+
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Usuario", b =>
                 {
                     b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Departamento", "Departmento")
@@ -288,6 +364,11 @@ namespace Proyecto_Desarrollo_Web.Migrations
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Modulo", b =>
                 {
                     b.Navigation("ModulosRoles");
+                });
+
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Proveedor", b =>
+                {
+                    b.Navigation("Productos");
                 });
 
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Rol", b =>

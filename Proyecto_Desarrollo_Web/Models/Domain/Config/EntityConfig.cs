@@ -43,7 +43,7 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Config
                 builder.HasMany(j => j.Usuarios).WithOne(j => j.Rol).HasForeignKey(c => c.RolId);
             }
         }
-    
+
         public class ModuloConfig : IEntityTypeConfiguration<Modulo>
         {
             public void Configure(EntityTypeBuilder<Modulo> builder)
@@ -70,6 +70,29 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Config
                 builder.HasKey(e => e.Id);
                 builder.Property(s => s.Descripcion).HasColumnType("varchar(25)").HasColumnName("Descripcion");
                 builder.HasMany(j => j.Modulos).WithOne(j => j.AgrupadoModulos).HasForeignKey(c => c.AgrupadoModulosId);
+            }
+        }
+
+        public class ProveedorConfig : IEntityTypeConfiguration<Proveedor>
+        {
+            public void Configure(EntityTypeBuilder<Proveedor> builder)
+            {
+                builder.HasKey(e => e.ProveedorId);
+                builder.Property(s => s.Nombre).HasColumnType("varchar(40)").HasColumnName("Nombre");
+                builder.Property(s => s.Telefono).HasColumnType("varchar(8)").HasColumnName("Telefono");
+                builder.HasMany(j => j.Productos).WithOne(j => j.Proveedor).HasForeignKey(c => c.ProveedorId);
+            }
+        }
+
+        public class ProductoConfig : IEntityTypeConfiguration<Producto>
+        {
+            public void Configure(EntityTypeBuilder<Producto> builder)
+            {
+                builder.HasKey(e => e.ProductoId);
+                builder.Property(s => s.Nombre).HasColumnType("varchar(40)").HasColumnName("Nombre");
+                builder.Property(s => s.Descripcion).HasColumnType("varchar(100)").HasColumnName("Descripcion");
+                builder.Property(s => s.Cantidad).HasColumnType("varchar(6)").HasColumnName("Cantidad");
+
             }
         }
     }

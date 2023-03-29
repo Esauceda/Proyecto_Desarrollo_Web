@@ -14,6 +14,8 @@ namespace Proyecto_Desarrollo_Web.Models.Domain
         public DbSet<Modulo> Modulo { get; set; }
         public DbSet<AgrupadosModulos> AgrupadoModulos { get; set; }
         public DbSet<ModulosRoles> ModulosRoles { get; set; }
+        public DbSet<Proveedor> Proveedor { get; set; }
+        public DbSet<Producto> Producto { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,7 +25,8 @@ namespace Proyecto_Desarrollo_Web.Models.Domain
             modelBuilder.ApplyConfiguration(new ModuloConfig());
             modelBuilder.ApplyConfiguration(new AgrupadosModulosConfig());
             modelBuilder.ApplyConfiguration(new ModulosRolesConfig());
-
+            modelBuilder.ApplyConfiguration(new ProveedorConfig());
+            modelBuilder.ApplyConfiguration(new ProductoConfig());
         }
     }
 }

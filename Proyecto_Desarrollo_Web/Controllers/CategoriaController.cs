@@ -53,7 +53,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
                 return View(newRol);
             }
             var newc = Categoria.Create(newRol.Nombre, newRol.Descripcion);
-            _context.Rol.Add(newc);
+            _context.Categoria.Add(newc);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

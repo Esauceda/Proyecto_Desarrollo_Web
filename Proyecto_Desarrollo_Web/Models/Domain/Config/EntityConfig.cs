@@ -95,5 +95,17 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Config
 
             }
         }
+
+        public class CategoriaConfig : IEntityTypeConfiguration<Categoria>
+        {
+            public void Configure(EntityTypeBuilder<Categoria> builder)
+            {
+                builder.HasKey(e => e.CategoriaId);
+                builder.Property(s => s.Nombre).HasColumnType("varchar(40)").HasColumnName("Nombre");
+                builder.Property(s => s.Descripcion).HasColumnType("varchar(100)").HasColumnName("Descripcion");
+               
+
+            }
+        }
     }
 }

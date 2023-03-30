@@ -15,6 +15,7 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
         public Guid CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
 
+        public Categoria Categoria { get; set; }
         public static Producto Create(string Nombre, string Descripcion, string Cantidad, Guid ProveedorId)
         {
             return new Producto

@@ -17,6 +17,8 @@ namespace Proyecto_Desarrollo_Web.Models.Domain
         public DbSet<Proveedor> Proveedor { get; set; }
         public DbSet<Producto> Producto { get; set; }
 
+        public DbSet<Categoria> Categoria { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(UsuarioConfig).Assembly);
@@ -27,6 +29,7 @@ namespace Proyecto_Desarrollo_Web.Models.Domain
             modelBuilder.ApplyConfiguration(new ModulosRolesConfig());
             modelBuilder.ApplyConfiguration(new ProveedorConfig());
             modelBuilder.ApplyConfiguration(new ProductoConfig());
+            modelBuilder.ApplyConfiguration(new CategoriaConfig());
         }
     }
 }

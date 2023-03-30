@@ -1,0 +1,46 @@
+﻿@using Proyecto_Desarrollo_Web.Models.ViewModel;
+@model CategoriaVm
+@{
+    ViewData["Title"] = "Eliminar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Eliminar</h1>
+
+<div class="container">
+    <h1>Eliminar</h1>
+    <div class="row">
+        <form method="post" asp-action="Eliminar">
+            <div class="row">
+                <div class="danger">
+                    @if (TempData["mensaje"] != null)
+                    {
+                        <div class="alert alert-warning alert-dismissible" role="alert">
+                            <p>@TempData["mensaje"]</p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+            <input asp-for="CategoriaId" type="hidden">
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" readonly />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" readonly />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Eliminar" class="btn-success" />
+
+            </div>
+        </form>
+    </div>
+</div>

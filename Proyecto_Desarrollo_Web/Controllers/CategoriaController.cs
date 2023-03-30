@@ -1,9 +1,13 @@
 ﻿using Mapster;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Proyecto_Desarrollo_Web.Filters;
 using Proyecto_Desarrollo_Web.Models.Domain;
+using Proyecto_Desarrollo_Web.Models.Domain.Entidades;
 using Proyecto_Desarrollo_Web.Models.ViewModel;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Proyecto_Desarrollo_Web.Controllers
@@ -27,6 +31,82 @@ namespace Proyecto_Desarrollo_Web.Controllers
             return View(ListaProducto);
         }
 
+        [HttpGet]
+        [ClaimRequirement("Categoria")]
+        public IActionResult Insertar()
+        {
+            var newcate = new CategoriaVm();
+
+            return View(newcate);
+        }
+
+        [HttpPost]
+        [ClaimRequirement("Categoria")]
+        public IActionResult Insertar(CategoriaVm newRol)
+        {
+            var cate = _context.Categoria.Where(w => w.Eliminado == false).ProjectToType<CategoriaVm>().ToList();
+
+            var validacion = newRol.Validar();
+            TempData["mensaje"] = validacion.Mensaje;
+            if (!validacion.IsValid)
+            {
+                return View(newRol);
+            }
+            var newc = Categoria.Create(newRol.Nombre, newRol.Descripcion);
+            _context.Rol.Add(newc);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [ClaimRequirement("Categoria")]
+        public IActionResult Editar(string Id)
+        {
+            var Roles = _context.Categoria.Where(w => w.CategoriaId == new Guid(Id) && w.Eliminado == false).ProjectToType<CategoriaVm>().FirstOrDefault();
+
+            return View(Roles);
+        }
+
+        [HttpPost]
+        [ClaimRequirement("Categoria")]
+        public IActionResult Editar(CategoriaVm newRol)
+        {
+            var validacion = newRol.ValidarUpdate();
+            TempData["mensaje"] = validacion.Mensaje;
+            if (!validacion.IsValid)
+            {
+                return View(newRol);
+            }
+            var RolActual = _context.Categoria.FirstOrDefault(w => w.CategoriaId == newRol.CategoriaId);
+            RolActual.update(newRol.Nombre, newRol.Descripcion);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [ClaimRequirement("Categoria")]
+        public IActionResult Eliminar(string Id)
+        {
+            var Roles = _context.Categoria.Where(w => w.CategoriaId == new Guid(Id) && w.Eliminado == false).ProjectToType<RolVm>().FirstOrDefault();
+
+            return View(Roles);
+        }
+
+        [HttpPost]
+        [ClaimRequirement("Categoria")]
+        public IActionResult Eliminar(CategoriaVm newRol)
+        {
+            var validacion = newRol.ValidarDelete();
+            TempData["mensaje"] = validacion.Mensaje;
+            if (!validacion.IsValid)
+            {
+                return View(newRol);
+            }
+            var RolActual = _context.Categoria.FirstOrDefault(w => w.CategoriaId == newRol.CategoriaId);
+            RolActual.Delete();
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
     }
 }

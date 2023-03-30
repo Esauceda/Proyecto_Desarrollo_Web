@@ -348,7 +348,7 @@ namespace Proyecto_Desarrollo_Web.Migrations
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.CompraEncabezado", b =>
                 {
                     b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Proveedor", "Proveedor")
-                        .WithMany()
+                        .WithMany("CompraEncabezados")
                         .HasForeignKey("ProveedorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -444,6 +444,8 @@ namespace Proyecto_Desarrollo_Web.Migrations
 
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Proveedor", b =>
                 {
+                    b.Navigation("CompraEncabezados");
+
                     b.Navigation("Productos");
                 });
 

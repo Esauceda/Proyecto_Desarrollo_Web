@@ -28,62 +28,26 @@ namespace Proyecto_Desarrollo_Web.Controllers
         [ClaimRequirement("ModuloRoles")]
         public IActionResult Index()
         {
-            var listamodulos = _context.ModulosRoles.Where(w => w.Eliminado == false).ProjectToType<ModulosRolesVm>().ToList();
-            return View(listamodulos);
-
+            var listamodulosroles = _context.ModulosRoles.Where(w => w.Eliminado == false).ProjectToType<ModulosRolesVm>().ToList();
+            return View(listamodulosroles);
         }
-
         [HttpGet]
         [ClaimRequirement("ModuloRoles")]
         public IActionResult Insertar()
         {
-            var newModulo = new ModulosRolesVm();
-            var Modulos = _context.Modulo.Where(w => w.Eliminado == false).ProjectToType<ModuloVm>().ToList();
-            List<SelectListItem> itemsagrupado = Modulos.ConvertAll(d =>
+            var newModuloRoles = new ModulosRolesVm();
+            var modulos = _context.Modulo.Where(w => w.Eliminado == false).ProjectToType<ModuloVm>().ToList();
+            List<SelectListItem> itemsmodulos = modulos.ConvertAll(d =>
             {
                 return new SelectListItem()
                 {
-                    Text = d.Metodo,
+                    Text = d.Nombre,
                     Value = d.Id.ToString(),
                     Selected = false
                 };
             });
-
-            var rol = _context.Rol.Where(w => w.Eliminado == false).ProjectToType<RolVm>().ToList();
-            List<SelectListItem> itemsagrupado1 = rol.ConvertAll(d =>
-            {
-                return new SelectListItem()
-                {
-                    Text = d.Descripcion,
-                    Value = d.Id.ToString(),
-                    Selected = false
-                };
-            });
-            newModulo.modulo = itemsagrupado;
-            newModulo.modulo = itemsagrupado1;
-            newModulo.CreatedDate = DateTime.Today;
-            return View(newModulo);
-        }
-
-        [HttpPost]
-        [ClaimRequirement("ModuloRoles")]
-        public IActionResult Insertar(ModulosRolesVm newModulo)
-        {
-
-            var ModulosRoless = _context.Modulo.Where(w => w.Eliminado == false).ProjectToType<ModuloVm>().ToList();
-            List<SelectListItem> itemsagrupado = ModulosRoless.ConvertAll(d =>
-            {
-                return new SelectListItem()
-                {
-                    Text = d.Metodo,
-                    Value = d.Id.ToString(),
-                    Selected = false
-                };
-            });
-            newModulo.modulo = itemsagrupado;
-
-            var rol = _context.Rol.Where(w => w.Eliminado == false).ProjectToType<RolVm>().ToList();
-            List<SelectListItem> itemsagrupado1 = rol.ConvertAll(d =>
+            var rols = _context.Rol.Where(w => w.Eliminado == false).ProjectToType<RolVm>().ToList();
+            List<SelectListItem> itemsrols = rols.ConvertAll(d =>
             {
                 return new SelectListItem()
                 {
@@ -92,72 +56,27 @@ namespace Proyecto_Desarrollo_Web.Controllers
                     Selected = false
                 };
             });
-
-            newModulo.rol = itemsagrupado1;
-            newModulo.CreatedDate = DateTime.Today;
-            var validacion = newModulo.Validar();
-            TempData["mensaje"] = validacion.Mensaje;
-            if (!validacion.IsValid)
-            {
-                return View(newModulo);
-            }
-
-            var newentidadmodulo = ModulosRoles.Create(newModulo.ModuloId, newModulo.RolId,
-                                                 newModulo.Eliminado, newModulo.CreatedBy, newModulo.CreatedDate);
-
-            _context.ModulosRoles.Add(newentidadmodulo);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        [ClaimRequirement("ModuloRoles")]
-        public IActionResult Editar(Guid ModuloId)
-        {
-            var modulo = _context.ModulosRoles.Where(w => w.Id == ModuloId && w.Eliminado == false).ProjectToType<ModulosRolesVm>().FirstOrDefault();
-            var ModulosRoless = _context.Modulo.Where(w => w.Eliminado == false).ProjectToType<ModuloVm>().ToList();
-            List<SelectListItem> itemsagrupado = ModulosRoless.ConvertAll(d =>
-            {
-                return new SelectListItem()
-                {
-                    Text = d.Metodo,
-                    Value = d.Id.ToString(),
-                    Selected = false
-                };
-            });
-            modulo.modulo = itemsagrupado;
-
-            var rol = _context.Rol.Where(w => w.Eliminado == false).ProjectToType<RolVm>().ToList();
-            List<SelectListItem> itemsagrupado1 = rol.ConvertAll(d =>
-            {
-                return new SelectListItem()
-                {
-                    Text = d.Descripcion,
-                    Value = d.Id.ToString(),
-                    Selected = false
-                };
-            });
-            modulo.rol = itemsagrupado;
-            return View(modulo);
+            newModuloRoles.modulo = itemsmodulos;
+            newModuloRoles.rol = itemsrols;
+            newModuloRoles.CreatedDate = DateTime.Today;
+            return View(newModuloRoles);
         }
         [HttpPost]
         [ClaimRequirement("ModuloRoles")]
-        public IActionResult Editar(ModulosRolesVm newModulo)
+        public IActionResult Insertar(ModulosRolesVm newModuloRoles)
         {
-            var ModulosRoless = _context.Modulo.Where(w => w.Eliminado == false).ProjectToType<ModuloVm>().ToList();
-            List<SelectListItem> itemsagrupado = ModulosRoless.ConvertAll(d =>
+            var modulos = _context.Modulo.Where(w => w.Eliminado == false).ProjectToType<ModuloVm>().ToList();
+            List<SelectListItem> itemsmodulos = modulos.ConvertAll(d =>
             {
                 return new SelectListItem()
                 {
-                    Text = d.Metodo,
+                    Text = d.Nombre,
                     Value = d.Id.ToString(),
                     Selected = false
                 };
             });
-            newModulo.modulo = itemsagrupado;
-
-            var rol = _context.Rol.Where(w => w.Eliminado == false).ProjectToType<RolVm>().ToList();
-            List<SelectListItem> itemsagrupado1 = rol.ConvertAll(d =>
+            var rols = _context.Rol.Where(w => w.Eliminado == false).ProjectToType<RolVm>().ToList();
+            List<SelectListItem> itemsrols = rols.ConvertAll(d =>
             {
                 return new SelectListItem()
                 {
@@ -166,49 +85,111 @@ namespace Proyecto_Desarrollo_Web.Controllers
                     Selected = false
                 };
             });
-
-            newModulo.rol = itemsagrupado1;
-            newModulo.CreatedDate = DateTime.Today;
-            var validacion = newModulo.Validar();
+            newModuloRoles.modulo = itemsmodulos;
+            newModuloRoles.rol = itemsrols;
+            newModuloRoles.CreatedDate = DateTime.Today;
+            var validacion = newModuloRoles.Validar();
             TempData["mensaje"] = validacion.Mensaje;
             if (!validacion.IsValid)
             {
-                return View(newModulo);
+                return View(newModuloRoles);
             }
-
-            var newentidadmodulo = ModulosRoles.Create(newModulo.ModuloId, newModulo.RolId,
-                                                 newModulo.Eliminado, newModulo.CreatedBy, newModulo.CreatedDate);
+            var newentidadmodulo = ModulosRoles.Create(newModuloRoles.RolId, newModuloRoles.ModuloId);
 
             _context.ModulosRoles.Add(newentidadmodulo);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
         [HttpGet]
-        [ClaimRequirement("Modulo")]
-        public IActionResult Eliminar(Guid ModuloI)
+        [ClaimRequirement("ModuloRoles")]
+        public IActionResult Editar(Guid Id)
         {
-            var modulo = _context.ModulosRoles.Where(w => w.Id == ModuloI && w.Eliminado == false).ProjectToType<ModulosRolesVm>().FirstOrDefault();
-            return View(modulo);
-
+            var moduloroles = _context.ModulosRoles.Where(w => w.Id == Id && w.Eliminado == false).ProjectToType<ModulosRolesVm>().FirstOrDefault();
+            var modulos = _context.Modulo.Where(w => w.Eliminado == false).ProjectToType<ModuloVm>().ToList();
+            List<SelectListItem> itemsmodulos = modulos.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.Nombre,
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+            var rols = _context.Rol.Where(w => w.Eliminado == false).ProjectToType<RolVm>().ToList();
+            List<SelectListItem> itemsrols = rols.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.Descripcion,
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+            moduloroles.modulo = itemsmodulos;
+            moduloroles.rol = itemsrols;
+            return View(moduloroles);
         }
-
-
         [HttpPost]
         [ClaimRequirement("ModuloRoles")]
-        public IActionResult Eliminar(ModulosRolesVm newModulo)
+        public IActionResult Editar(ModulosRolesVm newModuloRoles)
         {
-            var validacion = newModulo.ValidarEliminar();
+            var modulos = _context.Modulo.Where(w => w.Eliminado == false).ProjectToType<ModuloVm>().ToList();
+            List<SelectListItem> itemsmodulos = modulos.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.Nombre,
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+            var rols = _context.Rol.Where(w => w.Eliminado == false).ProjectToType<RolVm>().ToList();
+            List<SelectListItem> itemsrols = rols.ConvertAll(d =>
+            {
+                return new SelectListItem()
+                {
+                    Text = d.Descripcion,
+                    Value = d.Id.ToString(),
+                    Selected = false
+                };
+            });
+            newModuloRoles.modulo = itemsmodulos;
+            newModuloRoles.rol = itemsrols;
+            newModuloRoles.CreatedDate = DateTime.Today;
+            var validacion = newModuloRoles.ValidarUpdate();
             TempData["mensaje"] = validacion.Mensaje;
             if (!validacion.IsValid)
             {
-                return View(newModulo);
+                return View(newModuloRoles);
             }
-            var moduloactual = _context.ModulosRoles.FirstOrDefault(w => w.Id == newModulo.Id);
-            moduloactual.Delete();
+            var moduloRolActual = _context.ModulosRoles.FirstOrDefault(w => w.Id == newModuloRoles.Id);
+            moduloRolActual.Update(newModuloRoles.RolId, newModuloRoles.ModuloId);
+
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        [ClaimRequirement("ModuloRoles")]
+        public IActionResult Eliminar(Guid ModuloRolesId)
+        {
+            var moduloRoles = _context.ModulosRoles.Where(w => w.Id == ModuloRolesId && w.Eliminado == false).ProjectToType<ModulosRolesVm>().FirstOrDefault();
+            return View(moduloRoles);
 
-
+        }
+        [HttpPost]
+        [ClaimRequirement("ModuloRoles")]
+        public IActionResult Eliminar(ModulosRolesVm newModuloRoles)
+        {
+            var validacion = newModuloRoles.ValidarEliminar();
+            TempData["mensaje"] = validacion.Mensaje;
+            if (!validacion.IsValid)
+            {
+                return View(newModuloRoles);
+            }
+            var moduloRolActual = _context.ModulosRoles.FirstOrDefault(w => w.Id == newModuloRoles.Id);
+            moduloRolActual.Delete();
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

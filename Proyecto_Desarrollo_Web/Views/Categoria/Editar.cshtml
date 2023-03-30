@@ -5,11 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Editar</h1>
-
-
 <div class="container">
-    <h1>Insertar</h1>
+    <h1>Editar</h1>
     <div class="row">
         <form method="post" asp-action="Editar">
             <div class="row">
@@ -26,6 +23,7 @@
 
                 </div>
             </div>
+            <input asp-for="CategoriaId" type="hidden" class="form-control" />
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />

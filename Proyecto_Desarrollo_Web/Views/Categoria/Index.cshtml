@@ -46,8 +46,8 @@
                             <td>@item.Descripcion</td>
                            
                             <td>
-                                @Html.ActionLink("Editar", "Editar", "Categoria", new {@ProductoId = item.CategoriaId}, new{@class = "btn btn-info"})
-                                @Html.ActionLink("Eliminar", "Eliminar", "Categoria", new {@ProductoId = item.CategoriaId}, new{@class = "btn btn-info"})
+                                @Html.ActionLink("Editar", "Editar", "Categoria", new {@CategoriaId = item.CategoriaId}, new{@class = "btn btn-info"})
+                                @Html.ActionLink("Eliminar", "Eliminar", "Categoria", new {@CategoriaId = item.CategoriaId}, new{@class = "btn btn-info"})
                             </td>
                         </tr>
                     }

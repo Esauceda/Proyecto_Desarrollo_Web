@@ -10,8 +10,8 @@ using Proyecto_Desarrollo_Web.Models.Domain;
 namespace Proyecto_Desarrollo_Web.Migrations
 {
     [DbContext(typeof(ProyectoDBContext))]
-    [Migration("20230330024842_ini")]
-    partial class ini
+    [Migration("20230330205046_producto2")]
+    partial class producto2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,6 +65,35 @@ namespace Proyecto_Desarrollo_Web.Migrations
                     b.HasKey("CategoriaId");
 
                     b.ToTable("Categoria");
+                });
+
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.CompraEncabezado", b =>
+                {
+                    b.Property<Guid>("CompraEncabezadoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("FechaEntrega")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaSolicitud")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NumeroFactura")
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("NumeroFactura");
+
+                    b.Property<Guid>("ProveedorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CompraEncabezadoId");
+
+                    b.HasIndex("ProveedorId");
+
+                    b.ToTable("CompraEncabezado");
                 });
 
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Departamento", b =>
@@ -187,6 +216,10 @@ namespace Proyecto_Desarrollo_Web.Migrations
                     b.Property<string>("Nombre")
                         .HasColumnType("varchar(40)")
                         .HasColumnName("Nombre");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(8,2)")
+                        .HasColumnName("Precio");
 
                     b.Property<Guid>("ProveedorId")
                         .HasColumnType("uniqueidentifier");
@@ -318,6 +351,17 @@ namespace Proyecto_Desarrollo_Web.Migrations
                     b.ToTable("Usuario");
                 });
 
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.CompraEncabezado", b =>
+                {
+                    b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Proveedor", "Proveedor")
+                        .WithMany("CompraEncabezados")
+                        .HasForeignKey("ProveedorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Proveedor");
+                });
+
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Modulo", b =>
                 {
                     b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.AgrupadosModulos", "AgrupadoModulos")
@@ -350,8 +394,8 @@ namespace Proyecto_Desarrollo_Web.Migrations
 
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Producto", b =>
                 {
-                    b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Categoria", "Categoria")
-                        .WithMany("productos")
+                    b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Categoria", null)
+                        .WithMany("Productos")
                         .HasForeignKey("CategoriaId");
 
                     b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Proveedor", "Proveedor")
@@ -359,8 +403,6 @@ namespace Proyecto_Desarrollo_Web.Migrations
                         .HasForeignKey("ProveedorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Categoria");
 
                     b.Navigation("Proveedor");
                 });
@@ -391,7 +433,7 @@ namespace Proyecto_Desarrollo_Web.Migrations
 
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Categoria", b =>
                 {
-                    b.Navigation("productos");
+                    b.Navigation("Productos");
                 });
 
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Departamento", b =>
@@ -406,6 +448,8 @@ namespace Proyecto_Desarrollo_Web.Migrations
 
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Proveedor", b =>
                 {
+                    b.Navigation("CompraEncabezados");
+
                     b.Navigation("Productos");
                 });
 

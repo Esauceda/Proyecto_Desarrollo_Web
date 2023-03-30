@@ -36,10 +36,6 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             {
                 app.Mensaje += "El RolId no puede ir vacio. ";
             }
-            if (this.CreatedBy == null || this.CreatedBy == Guid.Empty)
-            {
-                app.Mensaje += "El CreateBy no puede ir vacia. ";
-            }
 
             if (string.IsNullOrEmpty(app.Mensaje))
             {
@@ -70,11 +66,6 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             {
                 app.Mensaje += "El RolId no puede ir vacio. ";
             }
-            if (this.CreatedBy == null || this.CreatedBy == Guid.Empty)
-            {
-                app.Mensaje += "El CreateBy no puede ir vacia. ";
-            }
-
             if (string.IsNullOrEmpty(app.Mensaje))
             {
                 app.IsValid = true;
@@ -104,11 +95,6 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             {
                 app.Mensaje += "El RolId no puede ir vacio. ";
             }
-            if (this.CreatedBy == null || this.CreatedBy == Guid.Empty)
-            {
-                app.Mensaje += "El CreateBy no puede ir vacia. ";
-            }
-
             if (string.IsNullOrEmpty(app.Mensaje))
             {
                 app.IsValid = true;

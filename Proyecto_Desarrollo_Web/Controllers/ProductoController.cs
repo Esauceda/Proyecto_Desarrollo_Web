@@ -74,7 +74,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
             {
                 return View(producto);
             }
-            var newentidadProducto = Producto.Create(producto.Nombre, producto.Descripcion, producto.Cantidad, producto.ProveedorId);
+            var newentidadProducto = Producto.Create(producto.Nombre, producto.Descripcion, producto.Cantidad, producto.Precio, producto.ProveedorId);
             _context.Producto.Add(newentidadProducto);
             _context.SaveChanges();
             return RedirectToAction("Index");
@@ -128,6 +128,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
                 producto.Nombre,
                 producto.Descripcion,
                 producto.Cantidad,
+                producto.Precio,
                 producto.ProveedorId
             );
             _context.SaveChanges();

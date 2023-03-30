@@ -92,7 +92,7 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Config
                 builder.Property(s => s.Nombre).HasColumnType("varchar(40)").HasColumnName("Nombre");
                 builder.Property(s => s.Descripcion).HasColumnType("varchar(100)").HasColumnName("Descripcion");
                 builder.Property(s => s.Cantidad).HasColumnType("varchar(6)").HasColumnName("Cantidad");
-
+                builder.Property(s => s.Precio).HasColumnType("decimal(4,2)").HasColumnName("Precio");
             }
         }
 
@@ -103,8 +103,6 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Config
                 builder.HasKey(e => e.CategoriaId);
                 builder.Property(s => s.Nombre).HasColumnType("varchar(40)").HasColumnName("Nombre");
                 builder.Property(s => s.Descripcion).HasColumnType("varchar(100)").HasColumnName("Descripcion");
-               
-
             }
         }
 

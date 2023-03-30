@@ -13,8 +13,7 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
         public Guid CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public static ModulosRoles Create(Guid ModuloId, Guid RolId, bool eliminado, Guid createBy,
-            DateTime createdDat)
+        public static ModulosRoles Create(Guid ModuloId, Guid RolId)
 
         {
             return new ModulosRoles
@@ -22,25 +21,13 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
                 Id = Guid.NewGuid(),
                 ModuloId = ModuloId,
                 RolId = RolId,
-                Eliminado = eliminado,
-                CreatedBy = createBy,
-                CreatedDate = createdDat,
-
-
-
-
-
             };
         }
-        public void Update(Guid ModuloId, Guid RolId, bool eliminado, Guid createBy,
-            DateTime createdDat)
+        public void Update(Guid ModuloId, Guid RolId)
         {
 
             this.ModuloId = ModuloId;
             this.RolId = RolId;
-            this.Eliminado = eliminado;
-            this.CreatedBy = createBy;
-            this.CreatedDate = createdDat;
         }
         public void Delete()
         {

@@ -10,8 +10,11 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public string Cantidad { get; set; }
+        public decimal Precio { get; set; }
         public Guid ProveedorId { get; set; }
         public ProveedorVm Proveedor { get; set; }
+        public Guid CategoriaId { get; set; }
+        public CategoriaVm Categoria { get; set; }
         public List<SelectListItem> Proveedores { get; set; }
         public AppResult Validar()
         {

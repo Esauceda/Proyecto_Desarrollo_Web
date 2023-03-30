@@ -27,7 +27,6 @@
 
 
     <div class="form-group">
-        @*@<td>@Html.ActionLink("Buscar","Buscar","Modulo", new {@class = "btn btn-info"})</td>*@
         <input type="submit" value="Agregar" class="btn-success">
     </div>
 
@@ -37,25 +36,20 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>ModuloId</th>
-                        <th>RolId</th>
-                        <th>CreatedBy</th>
-                        <th>CreatedDate</th>
+                        <th>Modulo</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@item.Id</td>
-                            <td>@item.Modulo.Id</td>
-                            <td>@item.Rol.Id</td>
-                            <td>@item.CreatedBy</td>
-                            <td>@item.CreatedDate</td>
+                            <td>@item.Modulo.Nombre</td>
+                            <td>@item.Rol.Descripcion</td>
                             <td>
-                                @Html.ActionLink("Editar","Editar","ModuloRoles", new{@ModuloID = item.Id}, new {@class = "btn btn-info"})
-                                @Html.ActionLink("Eliminar","Eliminar","ModuloRoles", new{@ModuloID = item.Id}, new {@class = "btn btn-info"})
+                                @Html.ActionLink("Editar","Editar","ModuloRoles", new{@Id = item.Id}, new {@class = "btn btn-info"})
+                                @Html.ActionLink("Eliminar","Eliminar","ModuloRoles", new{@Id = item.Id}, new {@class = "btn btn-info"})
                             </td>
 
                         </tr>

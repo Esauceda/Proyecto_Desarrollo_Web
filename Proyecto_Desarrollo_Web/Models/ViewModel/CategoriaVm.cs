@@ -26,7 +26,7 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             if (string.IsNullOrEmpty(app.Mensaje))
             {
                 app.IsValid = true;
-                app.Mensaje = "Producto ingresado correctamente";
+                app.Mensaje = "Categoria ingresado correctamente";
             }
             else
             {
@@ -79,7 +79,7 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             if (string.IsNullOrEmpty(app.Mensaje))
             {
                 app.IsValid = true;
-                app.Mensaje = "Producto eliminado correctamente";
+                app.Mensaje = "Categoria eliminada correctamente";
             }
             else
             {

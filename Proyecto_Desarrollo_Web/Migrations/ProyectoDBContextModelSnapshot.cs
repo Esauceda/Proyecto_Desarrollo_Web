@@ -215,6 +215,10 @@ namespace Proyecto_Desarrollo_Web.Migrations
                         .HasColumnType("varchar(40)")
                         .HasColumnName("Nombre");
 
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(4,2)")
+                        .HasColumnName("Precio");
+
                     b.Property<Guid>("ProveedorId")
                         .HasColumnType("uniqueidentifier");
 
@@ -388,8 +392,8 @@ namespace Proyecto_Desarrollo_Web.Migrations
 
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Producto", b =>
                 {
-                    b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Categoria", "Categoria")
-                        .WithMany("productos")
+                    b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Categoria", null)
+                        .WithMany("Productos")
                         .HasForeignKey("CategoriaId");
 
                     b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Proveedor", "Proveedor")
@@ -397,8 +401,6 @@ namespace Proyecto_Desarrollo_Web.Migrations
                         .HasForeignKey("ProveedorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Categoria");
 
                     b.Navigation("Proveedor");
                 });
@@ -429,7 +431,7 @@ namespace Proyecto_Desarrollo_Web.Migrations
 
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Categoria", b =>
                 {
-                    b.Navigation("productos");
+                    b.Navigation("Productos");
                 });
 
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Departamento", b =>

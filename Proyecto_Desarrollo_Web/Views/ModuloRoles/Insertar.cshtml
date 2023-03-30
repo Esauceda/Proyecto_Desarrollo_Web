@@ -9,8 +9,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Insertar</h1>
-
 <div class="container">
     <h1>Insertar</h1>
     @{
@@ -36,27 +34,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="ModuloId" nam class="custom-control-label">Modulo</label>
+                <label for="ModuloId" nam class="control-label">Modulo</label>
                 @Html.DropDownList("ModuloId",Model.modulo,"Seleccione Modulo", new{@class="form-control"})
             </div>
 
             <div class="form-group">
-                <label for="RolId" nam class="custom-control-label">Rol</label>
+                <label for="RolId" nam class="control-label">Rol</label>
                 @Html.DropDownList("RolId",Model.rol,"Seleccione Modulo", new{@class="form-control"})
             </div>
-            <div class="form-group">
-                <label asp-for="Eliminado" class="custom-control-label"></label>
-                <input asp-for="Eliminado" class="form-control" />
-                <span asp-validation-for="Eliminado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="CreatedBy" class="form-control" value="@UsuarioObjeto.UsuarioId" hidden />
-            </div>
-            <div class="form-group">
-                <input asp-for="CreatedDate" class="form-control" hidden />
-            </div>
-
-
             <div class="form-group">
                 <input type="submit" value="Insertar" class="btn-success" />
 

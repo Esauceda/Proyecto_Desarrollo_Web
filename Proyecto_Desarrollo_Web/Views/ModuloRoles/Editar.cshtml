@@ -1,4 +1,4 @@
-﻿@using Proyecto_Desarrollo_Web.Models.ViewModel;
+﻿ @using Proyecto_Desarrollo_Web.Models.ViewModel;
 @using Microsoft.AspNetCore.Http;
 @using Proyecto_Desarrollo_Web.Models.ViewModel;
 @using Newtonsoft.Json;
@@ -12,13 +12,6 @@
 <h1>Editar</h1>
 
 <div class="container">
-    <h1>Insertar</h1>
-    @{
-        var sesionBase64 = HttpContextAccessor.HttpContext.Session.GetString("UsuarioObjeto");
-        var base64EncodedBytes = System.Convert.FromBase64String(sesionBase64);
-        var sesion = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
-        UsuarioVm UsuarioObjeto = JsonConvert.DeserializeObject<UsuarioVm>(sesion);
-    }
     <div class="row">
         <form method="post" asp-action="Editar">
             <div class="row">
@@ -44,19 +37,6 @@
                 <label for="RolId" nam class="control-label">Rol</label>
                 @Html.DropDownList("RolId",Model.rol,"Seleccione Modulo", new{@class="form-control"})
             </div>
-            <div class="form-group">
-                <label asp-for="Eliminado" class="control-label"></label>
-                <input asp-for="Eliminado" class="form-control" />
-                <span asp-validation-for="Eliminado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input asp-for="CreatedBy" class="form-control" value="@UsuarioObjeto.UsuarioId" hidden />
-            </div>
-            <div class="form-group">
-                <input asp-for="CreatedDate" class="form-control" hidden />
-            </div>
-
-
             <div class="form-group">
                 <input type="submit" value="Editar" class="btn-success" />
 

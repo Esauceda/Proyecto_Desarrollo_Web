@@ -35,6 +35,7 @@
                         <th>Nombre</th>
                         <th>Descripcion</th>
                         <th>Cantidad</th>
+                        <th>Precio</th>
                         <th>Proveedor</th>
                         <th>Acciones</th>
                     </tr>
@@ -46,6 +47,7 @@
                             <td>@item.Nombre</td>
                             <td>@item.Descripcion</td>
                             <td>@item.Cantidad</td>
+                            <td>@item.Precio</td>
                             <td>@item.Proveedor.Nombre</td>
                             <td>
                                 @Html.ActionLink("Editar", "Editar", "Producto", new {@ProductoId = item.ProductoId}, new{@class = "btn btn-info"})

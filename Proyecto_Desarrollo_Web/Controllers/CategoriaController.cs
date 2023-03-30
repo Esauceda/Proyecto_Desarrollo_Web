@@ -60,36 +60,36 @@ namespace Proyecto_Desarrollo_Web.Controllers
 
         [HttpGet]
         [ClaimRequirement("Categoria")]
-        public IActionResult Editar(string Id)
+        public IActionResult Editar(Guid CategoriaId)
         {
-            var Roles = _context.Categoria.Where(w => w.CategoriaId == new Guid(Id) && w.Eliminado == false).ProjectToType<CategoriaVm>().FirstOrDefault();
+            var categoria = _context.Categoria.Where(w => w.CategoriaId == CategoriaId && w.Eliminado == false).ProjectToType<CategoriaVm>().FirstOrDefault();
 
-            return View(Roles);
+            return View(categoria);
         }
 
         [HttpPost]
         [ClaimRequirement("Categoria")]
-        public IActionResult Editar(CategoriaVm newRol)
+        public IActionResult Editar(CategoriaVm newCategoria)
         {
-            var validacion = newRol.ValidarUpdate();
+            var validacion = newCategoria.ValidarUpdate();
             TempData["mensaje"] = validacion.Mensaje;
             if (!validacion.IsValid)
             {
-                return View(newRol);
+                return View(newCategoria);
             }
-            var RolActual = _context.Categoria.FirstOrDefault(w => w.CategoriaId == newRol.CategoriaId);
-            RolActual.update(newRol.Nombre, newRol.Descripcion);
+            var CategoriaActual = _context.Categoria.FirstOrDefault(w => w.CategoriaId == newCategoria.CategoriaId);
+            CategoriaActual.update(newCategoria.Nombre, newCategoria.Descripcion);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         [ClaimRequirement("Categoria")]
-        public IActionResult Eliminar(string Id)
+        public IActionResult Eliminar(Guid CategoriaId)
         {
-            var Roles = _context.Categoria.Where(w => w.CategoriaId == new Guid(Id) && w.Eliminado == false).ProjectToType<RolVm>().FirstOrDefault();
+            var categoria = _context.Categoria.Where(w => w.CategoriaId == CategoriaId && w.Eliminado == false).ProjectToType<CategoriaVm>().FirstOrDefault();
 
-            return View(Roles);
+            return View(categoria);
         }
 
         [HttpPost]

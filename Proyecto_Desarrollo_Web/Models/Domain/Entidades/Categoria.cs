@@ -10,12 +10,11 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
         public string Nombre { get;set; }
         public string Descripcion { get; set; }
         public bool Eliminado { get; set; }
-
-        public ICollection<Producto> productos { get; set; }
+        public ICollection<Producto> Productos { get; set; }
 
         public Categoria()
         {
-            productos = new HashSet<Producto>();
+            Productos = new HashSet<Producto>();
         }
 
         public static Categoria Create(string nombre, string descripcion)

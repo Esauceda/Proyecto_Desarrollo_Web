@@ -19,7 +19,7 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
 
         public static Categoria Create(string nombre, string descripcion)
         {
-            return new Categoria() { Nombre = nombre,Descripcion = descripcion };
+            return new Categoria() { Nombre = nombre,Descripcion = descripcion, CategoriaId = Guid.NewGuid(), };
         }
 
         

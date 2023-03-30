@@ -13,18 +13,34 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
         public Guid CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public static ModulosRoles Create()
+        public static ModulosRoles Create(Guid ModuloId, Guid RolId, bool eliminado, Guid createBy,
+            DateTime createdDat)
 
         {
             return new ModulosRoles
             {
                 Id = Guid.NewGuid(),
-                CreatedDate = DateTime.Now
+                ModuloId = ModuloId,
+                RolId = RolId,
+                Eliminado = eliminado,
+                CreatedBy = createBy,
+                CreatedDate = createdDat,
+
+
+
+
+
             };
         }
-        public void Update()
+        public void Update(Guid ModuloId, Guid RolId, bool eliminado, Guid createBy,
+            DateTime createdDat)
         {
 
+            this.ModuloId = ModuloId;
+            this.RolId = RolId;
+            this.Eliminado = eliminado;
+            this.CreatedBy = createBy;
+            this.CreatedDate = createdDat;
         }
         public void Delete()
         {

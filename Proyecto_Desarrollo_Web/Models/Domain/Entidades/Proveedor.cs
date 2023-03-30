@@ -13,10 +13,13 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
         public Guid CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public ICollection<Producto> Productos { get; set; }
+        public ICollection<CompraEncabezado> CompraEncabezados { get; set; }
         public Proveedor()
         {
             Productos = new HashSet<Producto>();
+            CompraEncabezados = new HashSet<CompraEncabezado>();
         }
+        
 
         public static Proveedor Create(string Nombre, string Telefono)
         {

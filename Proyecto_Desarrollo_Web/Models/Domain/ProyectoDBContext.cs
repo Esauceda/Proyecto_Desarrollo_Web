@@ -16,8 +16,8 @@ namespace Proyecto_Desarrollo_Web.Models.Domain
         public DbSet<ModulosRoles> ModulosRoles { get; set; }
         public DbSet<Proveedor> Proveedor { get; set; }
         public DbSet<Producto> Producto { get; set; }
-
         public DbSet<Categoria> Categoria { get; set; }
+        public DbSet<CompraEncabezado> CompraEncabezado { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +30,7 @@ namespace Proyecto_Desarrollo_Web.Models.Domain
             modelBuilder.ApplyConfiguration(new ProveedorConfig());
             modelBuilder.ApplyConfiguration(new ProductoConfig());
             modelBuilder.ApplyConfiguration(new CategoriaConfig());
+            modelBuilder.ApplyConfiguration(new CompraEncabezadoConfig());
         }
     }
 }

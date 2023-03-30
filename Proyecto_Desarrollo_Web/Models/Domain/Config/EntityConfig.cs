@@ -107,5 +107,15 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Config
 
             }
         }
+
+        public class CompraEncabezadoConfig : IEntityTypeConfiguration<CompraEncabezado>
+        {
+            public void Configure(EntityTypeBuilder<CompraEncabezado> builder)
+            {
+                builder.HasKey(e => e.CompraEncabezadoId);
+                builder.Property(s => s.NumeroFactura).HasColumnType("varchar(50)").HasColumnName("NumeroFactura");
+
+            }
+        }
     }
 }

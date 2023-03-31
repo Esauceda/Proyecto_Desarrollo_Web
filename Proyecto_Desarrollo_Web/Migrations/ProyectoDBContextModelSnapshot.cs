@@ -216,7 +216,7 @@ namespace Proyecto_Desarrollo_Web.Migrations
                         .HasColumnName("Nombre");
 
                     b.Property<decimal>("Precio")
-                        .HasColumnType("decimal(4,2)")
+                        .HasColumnType("decimal(8,2)")
                         .HasColumnName("Precio");
 
                     b.Property<Guid>("ProveedorId")

@@ -9,6 +9,7 @@ using System.Linq;
 using Mapster;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using Rotativa.AspNetCore;
 
 namespace Proyecto_Desarrollo_Web.Controllers
 {
@@ -206,6 +207,14 @@ namespace Proyecto_Desarrollo_Web.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [ClaimRequirement("Producto")]
+        public IActionResult Reporte()
+        {
+            var ListaProducto = _context.Producto.Where(w => w.Eliminado == false).ProjectToType<ProductoVm>().ToList();
+            return new ViewAsPdf(ListaProducto);
         }
     }
 }

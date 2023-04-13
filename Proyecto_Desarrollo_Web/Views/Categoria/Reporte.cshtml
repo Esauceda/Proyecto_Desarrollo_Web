@@ -1,13 +1,13 @@
 ﻿@using Proyecto_Desarrollo_Web.Models.ViewModel;
 @model List<CategoriaVm>
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Reporte";
+    Layout = null;
 }
 
-<h1>Index</h1>
+<h1>Producto</h1>
 
-<form asp-action="Insertar" method="get">
+<form method="get">
     <div class="row">
         <div class="danger">
             @if (TempData["mensaje"] != null)
@@ -22,37 +22,26 @@
 
         </div>
     </div>
-
-    <div class="form-group">
-        <input type="submit" value="Agregar" class="btn-success">
-    </div>
     @if (Model.Count > 0)
     {
-        <div class="form-group">
-            @Html.ActionLink("PDF", "Reporte", "Producto", new{@class = "btn btn-info"})
-        </div>
-
         <div class="ScrollB">
             <table class="table table-bordered table-striped">
                 <tread>
                     <tr>
+                        <th>Catsgoria Id</th>
                         <th>Nombre</th>
                         <th>Descripcion</th>
-                     
-                        <th>Acciones</th>
+                        
                     </tr>
                 </tread>
                 <tbody>
                     @foreach (var item in Model)
                     {
                         <tr>
+                            <th>@item.CategoriaId</th>
                             <td>@item.Nombre</td>
                             <td>@item.Descripcion</td>
                            
-                            <td>
-                                @Html.ActionLink("Editar", "Editar", "Categoria", new {@CategoriaId = item.CategoriaId}, new{@class = "btn btn-info"})
-                                @Html.ActionLink("Eliminar", "Eliminar", "Categoria", new {@CategoriaId = item.CategoriaId}, new{@class = "btn btn-info"})
-                            </td>
                         </tr>
                     }
                 </tbody>
@@ -60,3 +49,4 @@
         </div>
     }
 </form>
+

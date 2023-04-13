@@ -9,13 +9,14 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
         public Guid ProductoId { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
-        public string Cantidad { get; set; }
+        public int Cantidad { get; set; }
         public decimal Precio { get; set; }
         public Guid ProveedorId { get; set; }
         public ProveedorVm Proveedor { get; set; }
         public Guid CategoriaId { get; set; }
         public CategoriaVm Categoria { get; set; }
         public List<SelectListItem> Proveedores { get; set; }
+        public List<SelectListItem> Categorias { get; set; }
         public AppResult Validar()
         {
             AppResult app = new AppResult();
@@ -29,7 +30,7 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             {
                 app.Mensaje += "El campo de descripcion no puede estar vacio";
             }
-            if (string.IsNullOrEmpty(this.Cantidad))
+            if (this.Cantidad == null)
             {
                 app.Mensaje += "El campo de cantidad no puede estar vacio";
             }
@@ -60,7 +61,7 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             {
                 app.Mensaje += "El campo de descripcion no puede estar vacio";
             }
-            if (string.IsNullOrEmpty(this.Cantidad))
+            if (this.Cantidad == null)
             {
                 app.Mensaje += "El campo de cantidad no puede estar vacio";
             }

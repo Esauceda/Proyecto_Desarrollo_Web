@@ -19,7 +19,6 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
             Productos = new HashSet<Producto>();
             CompraEncabezados = new HashSet<CompraEncabezado>();
         }
-        
 
         public static Proveedor Create(string Nombre, string Telefono)
         {

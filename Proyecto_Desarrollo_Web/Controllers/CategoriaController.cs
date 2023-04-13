@@ -78,7 +78,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
                 return View(newCategoria);
             }
             var CategoriaActual = _context.Categoria.FirstOrDefault(w => w.CategoriaId == newCategoria.CategoriaId);
-            CategoriaActual.update(newCategoria.Nombre, newCategoria.Descripcion);
+            CategoriaActual.Update(newCategoria.Nombre, newCategoria.Descripcion);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

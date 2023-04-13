@@ -81,6 +81,7 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Config
                 builder.Property(s => s.Nombre).HasColumnType("varchar(40)").HasColumnName("Nombre");
                 builder.Property(s => s.Telefono).HasColumnType("varchar(8)").HasColumnName("Telefono");
                 builder.HasMany(j => j.Productos).WithOne(j => j.Proveedor).HasForeignKey(c => c.ProveedorId);
+                builder.HasMany(j => j.CompraEncabezados).WithOne(j => j.Proveedor).HasForeignKey(c => c.ProveedorId);
             }
         }
 
@@ -92,7 +93,10 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Config
                 builder.Property(s => s.Nombre).HasColumnType("varchar(40)").HasColumnName("Nombre");
                 builder.Property(s => s.Descripcion).HasColumnType("varchar(100)").HasColumnName("Descripcion");
                 builder.Property(s => s.Cantidad).HasColumnType("varchar(6)").HasColumnName("Cantidad");
-                builder.Property(s => s.Precio).HasColumnType("decimal(4,2)").HasColumnName("Precio");
+                builder.Property(s => s.Precio).HasColumnType("decimal(8,2)").HasColumnName("Precio");
+                builder.HasMany(j => j.CompraDetalles).WithOne(j => j.Producto).HasForeignKey(c => c.ProductoId).OnDelete(DeleteBehavior.NoAction);
+                builder.HasMany(j => j.OrdenDetalles).WithOne(j => j.Producto).HasForeignKey(c => c.ProductoId).OnDelete(DeleteBehavior.NoAction);
+
             }
         }
 
@@ -103,6 +107,8 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Config
                 builder.HasKey(e => e.CategoriaId);
                 builder.Property(s => s.Nombre).HasColumnType("varchar(40)").HasColumnName("Nombre");
                 builder.Property(s => s.Descripcion).HasColumnType("varchar(100)").HasColumnName("Descripcion");
+                builder.HasMany(j => j.Productos).WithOne(j => j.Categoria).HasForeignKey(c => c.CategoriaId);
+
             }
         }
 
@@ -112,7 +118,50 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Config
             {
                 builder.HasKey(e => e.CompraEncabezadoId);
                 builder.Property(s => s.NumeroFactura).HasColumnType("varchar(50)").HasColumnName("NumeroFactura");
+                builder.HasMany(j => j.CompraDetalles).WithOne(j => j.CompraEncabezado).HasForeignKey(c => c.CompraEncabezadoId);
+            }
+        }
 
+        public class CompraDetalleConfig : IEntityTypeConfiguration<CompraDetalle>
+        {
+            public void Configure(EntityTypeBuilder<CompraDetalle> builder)
+            {
+                builder.HasKey(e => e.CompraDetalleId);
+                builder.Property(s => s.Precio).HasColumnType("decimal(8,2)").HasColumnName("Precio");
+                builder.Property(s => s.Cantidad).HasColumnType("varchar(6)").HasColumnName("Cantidad");
+            }
+        }
+
+        public class ClienteConfig : IEntityTypeConfiguration<Cliente>
+        {
+            public void Configure(EntityTypeBuilder<Cliente> builder)
+            {
+                builder.HasKey(e => e.ClienteId);
+                builder.Property(a => a.Nombre).HasColumnType("varchar(100)").HasColumnName("Nombre");
+                builder.Property(a => a.Apellido).HasColumnType("varchar(100)").HasColumnName("Apellido");
+                builder.Property(b => b.Telefono).HasColumnType("varchar(8)").HasColumnName("Telefono");
+                builder.Property(c => c.Correo).HasColumnType("varchar(100)").HasColumnName("Correo");
+                builder.Property(d => d.DNI).HasColumnType("varchar(100)").HasColumnName("DNI");
+                builder.Property(d => d.Direccion).HasColumnType("varchar(100)").HasColumnName("Direccion");
+            }
+        }
+
+        public class OrdenEncabezadoConfig : IEntityTypeConfiguration<OrdenEncabezado>
+        {
+            public void Configure(EntityTypeBuilder<OrdenEncabezado> builder)
+            {
+                builder.HasKey(e => e.OrdenEncabezadoId);
+                builder.HasMany(j => j.OrdenDetalles).WithOne(j => j.OrdenEncabezado).HasForeignKey(c => c.OrdenEncabezadoId);
+            }
+        }
+
+        public class OrdenDetalleConfig : IEntityTypeConfiguration<OrdenDetalle>
+        {
+            public void Configure(EntityTypeBuilder<OrdenDetalle> builder)
+            {
+                builder.HasKey(e => e.OrdenDetalleId);
+                builder.Property(s => s.Precio).HasColumnType("decimal(8,2)").HasColumnName("Precio");
+                builder.Property(s => s.Cantidad).HasColumnType("varchar(6)").HasColumnName("Cantidad");
             }
         }
     }

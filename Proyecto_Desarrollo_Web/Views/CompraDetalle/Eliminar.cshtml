@@ -1,14 +1,14 @@
 ﻿@using Proyecto_Desarrollo_Web.Models.ViewModel;
-@model CompraEncabezadoVm
+@model CompraDetalleVM
 @{
-    ViewData["Title"] = "Editar";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Eliminar";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
 <div class="container">
-    <h1>Editar</h1>
+    <h1>Eliminar</h1>
     <div class="row">
-        <form method="post" asp-action="Editar">
+        <form method="post" asp-action="Eliminar">
             <div class="row">
                 <div class="danger">
                     @if (TempData["mensaje"] != null)
@@ -23,24 +23,15 @@
 
                 </div>
             </div>
-            <input asp-for="CompraEncabezadoId" type="hidden" class="form-control" />
+
+            <input asp-for="CompraDetalleId" type="hidden">
             <div class="form-group">
-                <label asp-for="CompraEncabezado.NumeroFactura" class="control-label"></label>
-                <input asp-for="CompraEncabezado.NumeroFactura" class="form-control" readonly />
-                <span asp-validation-for="CompraEncabezado.NumeroFactura" class="text-danger"></span>
+                <label asp-for="CompraEncabezadoId" class="control-label"></label>
+                <input asp-for="CompraEncabezadoId" class="form-control" readonly />
+                <span asp-validation-for="CompraEncabezadoId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CompraEncabezado.FechaSolicitud" class="control-label"></label>
-                <input asp-for="CompraEncabezado.FechaSolicitud" class="form-control" />
-                <span asp-validation-for="CompraEncabezado.FechaSolicitud" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CompraEncabezado.FechaEntrega" class="control-label"></label>
-                <input asp-for="CompraEncabezado.FechaEntrega" class="form-control" />
-                <span asp-validation-for="CompraEncabezado.FechaEntrega" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Producto.Nombre" class="control-label">Producto(s)</label>
+                <label asp-for="Producto.Nombre" class="control-label"></label>
                 <input asp-for="Producto.Nombre" class="form-control" readonly />
                 <span asp-validation-for="Producto.Nombre" class="text-danger"></span>
             </div>
@@ -55,9 +46,12 @@
                 <span asp-validation-for="Cantidad" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Guardar" class="btn-success" />
+                <input type="submit" value="Eliminar" class="btn-success" />
+
             </div>
         </form>
     </div>
 </div>
+
+
 

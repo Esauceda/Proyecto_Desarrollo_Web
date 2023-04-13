@@ -1,5 +1,5 @@
 ﻿@using Proyecto_Desarrollo_Web.Models.ViewModel;
-@model CompraEncabezadoVm
+@model OrdenEncabezadoVm
 @{
     ViewData["Title"] = "Insertar";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,23 +24,13 @@
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="NumeroFactura" class="control-label"></label>
-                <input asp-for="NumeroFactura" class="form-control" />
-                <span asp-validation-for="NumeroFactura" class="text-danger"></span>
+                <label for="ClienteId" nam class="control-label">Cliente</label>
+                @Html.DropDownList("ClienteId",Model.Clientes,"Seleccione Cliente", new{@class="form-control"})
             </div>
             <div class="form-group">
-                <label asp-for="FechaSolicitud" class="control-label"></label>
-                <input asp-for="FechaSolicitud" class="form-control" />
-                <span asp-validation-for="FechaSolicitud" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaEntrega" class="control-label"></label>
-                <input asp-for="FechaEntrega" class="form-control"/>
-                <span asp-validation-for="FechaEntrega" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="ProveedorId" nam class="control-label" >Proveedor</label>
-                @Html.DropDownList("ProveedorId",Model.Proveedores,"Seleccione Proveedor", new{@class="form-control"})
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <select name="productosSeleccionados" id="Productos" multiple class="form-control" style="border: solid">

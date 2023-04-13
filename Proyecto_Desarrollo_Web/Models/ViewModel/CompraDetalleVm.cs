@@ -1,50 +1,40 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System;
 using Proyecto_Desarrollo_Web.Models.Domain.Entidades;
+using System;
+using System.Collections.Generic;
 
 namespace Proyecto_Desarrollo_Web.Models.ViewModel
 {
-    public class CompraEncabezadoVm
+    public class CompraDetalleVM
     {
-        public Guid CompraEncabezadoId { get; set; }
-        public Guid ProveedorId { get; set; }
-        public ProveedorVm Proveedor { get; set; }
-        public List<SelectListItem> Proveedores { get; set; }
-        public DateTime FechaSolicitud { get; set; }
-        public DateTime FechaEntrega { get; set; } = DateTime.Today;
-        public string NumeroFactura { get; set; }
-
-        //Datos CompraDetalle
-
-        public Guid ProductoId { get; set; }
+        public Guid CompraDetalleId { get; set; }
         public Producto Producto { get; set; }
+        public Guid ProductoId { get; set; }
         public List<SelectListItem> Productos { get; set; }
         public CompraEncabezado CompraEncabezado { get; set; }
+        public Guid CompraEncabezadoId { get; set; }
         public List<SelectListItem> CompraEncabezados { get; set; }
         public decimal Precio { get; set; }
         public int Cantidad { get; set; }
-
         public AppResult Validar()
         {
             AppResult app = new AppResult();
             app.Mensaje = "";
-
-            if (string.IsNullOrEmpty(this.NumeroFactura))
+            if (this.Cantidad == null)
             {
-                app.Mensaje += "El campo de numero de factura no puede estar vacio";
+                app.Mensaje += "La cantidad no puede estar vacioa";
             }
-            if (this.ProveedorId == null || this.ProveedorId == Guid.Empty)
+            if (this.ProductoId == null || this.ProductoId == Guid.Empty)
             {
-                app.Mensaje += ", el proveedor id no puede estar vacio";
+                app.Mensaje += "El producto id no puede estar vacio";
             }
-            if (this.FechaSolicitud == null)
+            if (this.CompraEncabezadoId == null || this.CompraEncabezadoId == Guid.Empty)
             {
-                app.Mensaje += "El campo de fecha de solicitud no puede estar vacio";
+                app.Mensaje += "La compra encabezado id no puede estar vacio";
             }
-            if (this.FechaEntrega == null)
+            if (this.Precio == null)
             {
-                app.Mensaje += "El campo de fecha de entrega no puede estar vacio";
+                app.Mensaje += "El precio no puede estar vacio";
             }
             if (string.IsNullOrEmpty(app.Mensaje))
             {
@@ -61,25 +51,25 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
         {
             AppResult app = new AppResult();
             app.Mensaje = "";
+            if (this.CompraDetalleId == null || this.CompraDetalleId == Guid.Empty)
+            {
+                app.Mensaje += "La compra detalle id no puede estar vacia";
+            }
+            if (this.Cantidad == null)
+            {
+                app.Mensaje += "La cantidad no puede estar vacioa";
+            }
+            if (this.ProductoId == null || this.ProductoId == Guid.Empty)
+            {
+                app.Mensaje += "El producto id no puede estar vacio";
+            }
             if (this.CompraEncabezadoId == null || this.CompraEncabezadoId == Guid.Empty)
             {
-                app.Mensaje += "La compra encabezado id no puede estar vacia";
+                app.Mensaje += "La compra encabezado id no puede estar vacio";
             }
-            if (string.IsNullOrEmpty(this.NumeroFactura))
+            if (this.Precio == null)
             {
-                app.Mensaje += "El campo de numero de factura no puede estar vacio";
-            }
-            if (this.ProveedorId == null || this.ProveedorId == Guid.Empty)
-            {
-                app.Mensaje += ", el proveedor id no puede estar vacio";
-            }
-            if (this.FechaSolicitud == null)
-            {
-                app.Mensaje += "El campo de fecha de solicitud no puede estar vacio";
-            }
-            if (this.FechaEntrega == null)
-            {
-                app.Mensaje += "El campo de fecha de entrega no puede estar vacio";
+                app.Mensaje += "El precio no puede estar vacio";
             }
             if (string.IsNullOrEmpty(app.Mensaje))
             {

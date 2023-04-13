@@ -18,6 +18,10 @@ namespace Proyecto_Desarrollo_Web.Models.Domain
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<CompraEncabezado> CompraEncabezado { get; set; }
+        public DbSet<CompraDetalle> CompraDetalle { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<OrdenEncabezado> OrdenEncabezado { get; set; }
+        public DbSet<OrdenDetalle> OrdenDetalle { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,6 +35,11 @@ namespace Proyecto_Desarrollo_Web.Models.Domain
             modelBuilder.ApplyConfiguration(new ProductoConfig());
             modelBuilder.ApplyConfiguration(new CategoriaConfig());
             modelBuilder.ApplyConfiguration(new CompraEncabezadoConfig());
+            modelBuilder.ApplyConfiguration(new CompraDetalleConfig());
+            modelBuilder.ApplyConfiguration(new ClienteConfig());
+            modelBuilder.ApplyConfiguration(new OrdenEncabezadoConfig());
+            modelBuilder.ApplyConfiguration(new OrdenDetalleConfig());
+
         }
     }
 }

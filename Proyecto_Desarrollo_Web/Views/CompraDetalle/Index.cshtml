@@ -1,11 +1,11 @@
 ﻿@using Proyecto_Desarrollo_Web.Models.ViewModel;
-@model List<ProductoVm>
+@model List<CompraDetalleVM>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Producto</h1>
+<h1>Compra Detalle</h1>
 
 <form asp-action="Insertar" method="get">
     <div class="row">
@@ -32,11 +32,10 @@
             <table class="table table-bordered table-striped">
                 <tread>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Descripcion</th>
+                        <th>Compra Encabezado</th>
+                        <th>Producto</th>
+                        <th>Precio</th>
                         <th>Cantidad</th>
-                        <th>Precio Venta</th>
-                        <th>Proveedor</th>
                         <th>Acciones</th>
                     </tr>
                 </tread>
@@ -44,14 +43,13 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@item.Nombre</td>
-                            <td>@item.Descripcion</td>
-                            <td>@item.Cantidad</td>
+                            <td>@item.CompraEncabezadoId</td>
+                            <td>@item.Producto.Nombre</td>
                             <td>@item.Precio</td>
-                            <td>@item.Proveedor.Nombre</td>
+                            <td>@item.Cantidad</td>
                             <td>
-                                @Html.ActionLink("Editar", "Editar", "Producto", new {@ProductoId = item.ProductoId}, new{@class = "btn btn-info"})
-                                @Html.ActionLink("Eliminar", "Eliminar", "Producto", new {@ProductoId = item.ProductoId}, new{@class = "btn btn-info"})
+                                @Html.ActionLink("Editar", "Editar", "CompraDetalle", new {@CompraDetalleId = item.CompraDetalleId}, new{@class = "btn btn-info"})
+                                @Html.ActionLink("Eliminar", "Eliminar", "CompraDetalle ", new {@CompraDetalleId = item.CompraDetalleId}, new{@class = "btn btn-info"})
                             </td>
                         </tr>
                     }

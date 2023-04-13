@@ -48,6 +48,17 @@ namespace Proyecto_Desarrollo_Web.Controllers
             });
             producto.Proveedores = itemsProveedores;
 
+            var listaCategorias = _context.Categoria.Where(w => w.Eliminado == false).ProjectToType<CategoriaVm>().ToList();
+            List<SelectListItem> itemsCategorias = listaCategorias.ConvertAll(t => {
+                return new SelectListItem()
+                {
+                    Text = t.Nombre.ToString(),
+                    Value = t.CategoriaId.ToString(),
+                    Selected = false
+                };
+            });
+            producto.Categorias = itemsCategorias;
+
             return View(producto);
         }
 
@@ -68,13 +79,24 @@ namespace Proyecto_Desarrollo_Web.Controllers
             });
             producto.Proveedores = itemsProveedores;
 
+            var listaCategorias = _context.Categoria.Where(w => w.Eliminado == false).ProjectToType<CategoriaVm>().ToList();
+            List<SelectListItem> itemsCategorias = listaCategorias.ConvertAll(t => {
+                return new SelectListItem()
+                {
+                    Text = t.Nombre.ToString(),
+                    Value = t.CategoriaId.ToString(),
+                    Selected = false
+                };
+            });
+            producto.Categorias = itemsCategorias;
+
             var validacion = producto.Validar();
             TempData["mensaje"] = validacion.Mensaje;
             if (!validacion.IsValid)
             {
                 return View(producto);
             }
-            var newentidadProducto = Producto.Create(producto.Nombre, producto.Descripcion, producto.Cantidad, producto.Precio, producto.ProveedorId);
+            var newentidadProducto = Producto.Create(producto.Nombre, producto.Descripcion, producto.Cantidad, producto.Precio, producto.ProveedorId, producto.CategoriaId);
             _context.Producto.Add(newentidadProducto);
             _context.SaveChanges();
             return RedirectToAction("Index");
@@ -96,6 +118,17 @@ namespace Proyecto_Desarrollo_Web.Controllers
             });
             producto.Proveedores = itemsProveedores;
 
+            var listaCategorias = _context.Categoria.Where(w => w.Eliminado == false).ProjectToType<CategoriaVm>().ToList();
+            List<SelectListItem> itemsCategorias = listaCategorias.ConvertAll(t => {
+                return new SelectListItem()
+                {
+                    Text = t.Nombre.ToString(),
+                    Value = t.CategoriaId.ToString(),
+                    Selected = false
+                };
+            });
+            producto.Categorias = itemsCategorias;
+
             return View(producto);
         }
 
@@ -116,6 +149,17 @@ namespace Proyecto_Desarrollo_Web.Controllers
             });
             producto.Proveedores = itemsProveedores;
 
+            var listaCategorias = _context.Categoria.Where(w => w.Eliminado == false).ProjectToType<CategoriaVm>().ToList();
+            List<SelectListItem> itemsCategorias = listaCategorias.ConvertAll(t => {
+                return new SelectListItem()
+                {
+                    Text = t.Nombre.ToString(),
+                    Value = t.CategoriaId.ToString(),
+                    Selected = false
+                };
+            });
+            producto.Categorias = itemsCategorias;
+
             var validacion = producto.ValidarUpdate();
             TempData["mensaje"] = validacion.Mensaje;
             if (!validacion.IsValid)
@@ -129,7 +173,8 @@ namespace Proyecto_Desarrollo_Web.Controllers
                 producto.Descripcion,
                 producto.Cantidad,
                 producto.Precio,
-                producto.ProveedorId
+                producto.ProveedorId,
+                producto.CategoriaId
             );
             _context.SaveChanges();
 

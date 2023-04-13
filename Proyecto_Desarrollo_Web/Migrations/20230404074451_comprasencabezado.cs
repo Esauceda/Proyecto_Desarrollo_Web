@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Proyecto_Desarrollo_Web.Migrations
 {
-    public partial class compra : Migration
+    public partial class comprasencabezado : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,7 @@ namespace Proyecto_Desarrollo_Web.Migrations
                     FechaSolicitud = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEntrega = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NumeroFactura = table.Column<string>(type: "varchar(50)", nullable: true),
-                    Estado = table.Column<bool>(type: "bit", nullable: false)
+                    Eliminado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

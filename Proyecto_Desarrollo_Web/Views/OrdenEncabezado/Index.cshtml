@@ -1,11 +1,11 @@
 ﻿@using Proyecto_Desarrollo_Web.Models.ViewModel;
-@model List<ProductoVm>
+@model List<OrdenEncabezadoVm>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Producto</h1>
+<h1>Ordenes</h1>
 
 <form asp-action="Insertar" method="get">
     <div class="row">
@@ -32,11 +32,8 @@
             <table class="table table-bordered table-striped">
                 <tread>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Descripcion</th>
-                        <th>Cantidad</th>
-                        <th>Precio Venta</th>
-                        <th>Proveedor</th>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
                         <th>Acciones</th>
                     </tr>
                 </tread>
@@ -44,14 +41,11 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@item.Nombre</td>
-                            <td>@item.Descripcion</td>
-                            <td>@item.Cantidad</td>
-                            <td>@item.Precio</td>
-                            <td>@item.Proveedor.Nombre</td>
+                            <td>@item.Cliente.Nombre</td>
+                            <td>@item.Fecha</td>
                             <td>
-                                @Html.ActionLink("Editar", "Editar", "Producto", new {@ProductoId = item.ProductoId}, new{@class = "btn btn-info"})
-                                @Html.ActionLink("Eliminar", "Eliminar", "Producto", new {@ProductoId = item.ProductoId}, new{@class = "btn btn-info"})
+                                @Html.ActionLink("Editar", "Editar", "OrdenEncabezado", new {@OrdenEncabezadoId = item.OrdenEncabezadoId}, new{@class = "btn btn-info"})
+                                @Html.ActionLink("Eliminar", "Eliminar", "OrdenEncabezado", new {@OrdenEncabezadoId = item.OrdenEncabezadoId}, new{@class = "btn btn-info"})
                             </td>
                         </tr>
                     }
@@ -60,3 +54,4 @@
         </div>
     }
 </form>
+

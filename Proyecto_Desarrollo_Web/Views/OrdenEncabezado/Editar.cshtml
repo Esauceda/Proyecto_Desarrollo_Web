@@ -1,5 +1,5 @@
 ﻿@using Proyecto_Desarrollo_Web.Models.ViewModel;
-@model ProductoVm
+@model OrdenEncabezadoVm
 @{
     ViewData["Title"] = "Editar";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -23,29 +23,30 @@
 
                 </div>
             </div>
-                <input asp-for="ProductoId" type="hidden" class="form-control" />
+            <input asp-for="OrdenEncabezadoId" type="hidden" class="form-control" />
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                <label for="ClienteId" nam class="control-label">Cliente</label>
+                @Html.DropDownList("ClienteId",Model.Clientes,"Seleccione Cliente", new{@class="form-control"})
             </div>
             <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+         <div class="form-group">
+                <label asp-for="Producto.Nombre" class="control-label"></label>
+                <input asp-for="Producto.Nombre" class="form-control" readonly />
+                <span asp-validation-for="Producto.Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Precio" class="control-label"></label>
+                <input asp-for="Precio" class="form-control" readonly />
+                <span asp-validation-for="Precio" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Cantidad" class="control-label"></label>
-                <input asp-for="Cantidad" class="form-control" />
+                <input asp-for="Cantidad" class="form-control" readonly />
                 <span asp-validation-for="Cantidad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="ProveedorId" nam class="control-label">Proveedor</label>
-                @Html.DropDownList("ProveedorId",Model.Proveedores,"Seleccione Proveedor", new{@class="form-control"})
-            </div>
-            <div class="form-group">
-                <label for="CategoriaId" nam class="control-label">Proveedor</label>
-                @Html.DropDownList("CategoriaId",Model.Categorias,"Seleccione Categoria", new{@class="form-control"})
             </div>
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn-success" />
@@ -53,7 +54,4 @@
         </form>
     </div>
 </div>
-
-
-
 

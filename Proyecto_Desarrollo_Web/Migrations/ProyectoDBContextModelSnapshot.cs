@@ -49,6 +49,12 @@ namespace Proyecto_Desarrollo_Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Descripcion")
                         .HasColumnType("varchar(100)")
                         .HasColumnName("Descripcion");
@@ -63,6 +69,83 @@ namespace Proyecto_Desarrollo_Web.Migrations
                     b.HasKey("CategoriaId");
 
                     b.ToTable("Categoria");
+                });
+
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Cliente", b =>
+                {
+                    b.Property<Guid>("ClienteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Apellido")
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("Apellido");
+
+                    b.Property<string>("Correo")
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("Correo");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DNI")
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("DNI");
+
+                    b.Property<string>("Direccion")
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("Direccion");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("Nombre");
+
+                    b.Property<string>("Telefono")
+                        .HasColumnType("varchar(8)")
+                        .HasColumnName("Telefono");
+
+                    b.HasKey("ClienteId");
+
+                    b.ToTable("Cliente");
+                });
+
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.CompraDetalle", b =>
+                {
+                    b.Property<Guid>("CompraDetalleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Cantidad")
+                        .IsRequired()
+                        .HasColumnType("varchar(6)")
+                        .HasColumnName("Cantidad");
+
+                    b.Property<Guid>("CompraEncabezadoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(8,2)")
+                        .HasColumnName("Precio");
+
+                    b.Property<Guid>("ProductoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CompraDetalleId");
+
+                    b.HasIndex("CompraEncabezadoId");
+
+                    b.HasIndex("ProductoId");
+
+                    b.ToTable("CompraDetalle");
                 });
 
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.CompraEncabezado", b =>
@@ -185,6 +268,61 @@ namespace Proyecto_Desarrollo_Web.Migrations
                     b.ToTable("ModulosRoles");
                 });
 
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.OrdenDetalle", b =>
+                {
+                    b.Property<Guid>("OrdenDetalleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Cantidad")
+                        .IsRequired()
+                        .HasColumnType("varchar(6)")
+                        .HasColumnName("Cantidad");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("OrdenEncabezadoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(8,2)")
+                        .HasColumnName("Precio");
+
+                    b.Property<Guid>("ProductoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("OrdenDetalleId");
+
+                    b.HasIndex("OrdenEncabezadoId");
+
+                    b.HasIndex("ProductoId");
+
+                    b.ToTable("OrdenDetalle");
+                });
+
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.OrdenEncabezado", b =>
+                {
+                    b.Property<Guid>("OrdenEncabezadoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ClienteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("OrdenEncabezadoId");
+
+                    b.HasIndex("ClienteId");
+
+                    b.ToTable("OrdenEncabezado");
+                });
+
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Producto", b =>
                 {
                     b.Property<Guid>("ProductoId")
@@ -192,10 +330,11 @@ namespace Proyecto_Desarrollo_Web.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Cantidad")
+                        .IsRequired()
                         .HasColumnType("varchar(6)")
                         .HasColumnName("Cantidad");
 
-                    b.Property<Guid?>("CategoriaId")
+                    b.Property<Guid>("CategoriaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CreatedBy")
@@ -216,7 +355,7 @@ namespace Proyecto_Desarrollo_Web.Migrations
                         .HasColumnName("Nombre");
 
                     b.Property<decimal>("Precio")
-                        .HasColumnType("decimal(4,2)")
+                        .HasColumnType("decimal(8,2)")
                         .HasColumnName("Precio");
 
                     b.Property<Guid>("ProveedorId")
@@ -349,6 +488,25 @@ namespace Proyecto_Desarrollo_Web.Migrations
                     b.ToTable("Usuario");
                 });
 
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.CompraDetalle", b =>
+                {
+                    b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.CompraEncabezado", "CompraEncabezado")
+                        .WithMany("CompraDetalles")
+                        .HasForeignKey("CompraEncabezadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Producto", "Producto")
+                        .WithMany("CompraDetalles")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CompraEncabezado");
+
+                    b.Navigation("Producto");
+                });
+
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.CompraEncabezado", b =>
                 {
                     b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Proveedor", "Proveedor")
@@ -390,17 +548,51 @@ namespace Proyecto_Desarrollo_Web.Migrations
                     b.Navigation("Rol");
                 });
 
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.OrdenDetalle", b =>
+                {
+                    b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.OrdenEncabezado", "OrdenEncabezado")
+                        .WithMany("OrdenDetalles")
+                        .HasForeignKey("OrdenEncabezadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Producto", "Producto")
+                        .WithMany("OrdenDetalles")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("OrdenEncabezado");
+
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.OrdenEncabezado", b =>
+                {
+                    b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+                });
+
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Producto", b =>
                 {
-                    b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Categoria", null)
+                    b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Categoria", "Categoria")
                         .WithMany("Productos")
-                        .HasForeignKey("CategoriaId");
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Proveedor", "Proveedor")
                         .WithMany("Productos")
                         .HasForeignKey("ProveedorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Categoria");
 
                     b.Navigation("Proveedor");
                 });
@@ -434,6 +626,11 @@ namespace Proyecto_Desarrollo_Web.Migrations
                     b.Navigation("Productos");
                 });
 
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.CompraEncabezado", b =>
+                {
+                    b.Navigation("CompraDetalles");
+                });
+
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Departamento", b =>
                 {
                     b.Navigation("Usuarios");
@@ -442,6 +639,18 @@ namespace Proyecto_Desarrollo_Web.Migrations
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Modulo", b =>
                 {
                     b.Navigation("ModulosRoles");
+                });
+
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.OrdenEncabezado", b =>
+                {
+                    b.Navigation("OrdenDetalles");
+                });
+
+            modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Producto", b =>
+                {
+                    b.Navigation("CompraDetalles");
+
+                    b.Navigation("OrdenDetalles");
                 });
 
             modelBuilder.Entity("Proyecto_Desarrollo_Web.Models.Domain.Entidades.Proveedor", b =>

@@ -1,9 +1,10 @@
 ﻿@using Proyecto_Desarrollo_Web.Models.ViewModel;
-@model UsuarioVm
+@model ClienteVm
 @{
     ViewData["Title"] = "Insertar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 
 <div class="container">
     <h1>Insertar</h1>
@@ -24,19 +25,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apellido" class="control-label"></label>
+                <input asp-for="Apellido" class="form-control" />
+                <span asp-validation-for="Apellido" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Telefono" class="control-label"></label>
@@ -59,20 +55,9 @@
                 <span asp-validation-for="Direccion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="RolId" nam class="control-label">Rol</label>
-                @Html.DropDownList("RolId",Model.Rols,"Seleccione Rol", new{@class="form-control"})
-            </div>
-            <div class="form-group">
-                <label for="DepartamentoId" nam class="control-label">Rol</label>
-                @Html.DropDownList("DepartamentoId",Model.Departamentos,"Seleccione Departamento", new{@class="form-control"})
-            </div>
-            <div class="form-group">
                 <input type="submit" value="Insertar" class="btn-success" />
 
             </div>
-
-
         </form>
     </div>
-
 </div>

@@ -7,6 +7,23 @@ namespace Proyecto_Desarrollo_Web.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
+            migrationBuilder.CreateTable(
+                name: "Categoria",
+                columns: table => new
+                {
+                    CategoriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nombre = table.Column<string>(type: "varchar(40)", nullable: true),
+                    Descripcion = table.Column<string>(type: "varchar(100)", nullable: true),
+                    Eliminado = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categoria", x => x.CategoriaId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Proveedor",
                 columns: table => new
@@ -31,7 +48,9 @@ namespace Proyecto_Desarrollo_Web.Migrations
                     Nombre = table.Column<string>(type: "varchar(40)", nullable: true),
                     Descripcion = table.Column<string>(type: "varchar(100)", nullable: true),
                     Cantidad = table.Column<string>(type: "varchar(6)", nullable: true),
+                    Precio = table.Column<decimal>(type: "decimal(8,2)", nullable: false),
                     ProveedorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Eliminado = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -40,12 +59,23 @@ namespace Proyecto_Desarrollo_Web.Migrations
                 {
                     table.PrimaryKey("PK_Producto", x => x.ProductoId);
                     table.ForeignKey(
+                        name: "FK_Producto_Categoria_CategoriaId",
+                        column: x => x.CategoriaId,
+                        principalTable: "Categoria",
+                        principalColumn: "CategoriaId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Producto_Proveedor_ProveedorId",
                         column: x => x.ProveedorId,
                         principalTable: "Proveedor",
                         principalColumn: "ProveedorId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Producto_CategoriaId",
+                table: "Producto",
+                column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Producto_ProveedorId",
@@ -59,7 +89,14 @@ namespace Proyecto_Desarrollo_Web.Migrations
                 name: "Producto");
 
             migrationBuilder.DropTable(
+                name: "Categoria");
+
+            migrationBuilder.DropTable(
                 name: "Proveedor");
+
+            migrationBuilder.DropColumn(
+                name: "token_recovery",
+                table: "Usuario");
         }
     }
 }

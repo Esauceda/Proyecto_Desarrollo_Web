@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
 {
@@ -11,6 +12,11 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
         public DateTime FechaEntrega { get; set; }
         public string NumeroFactura { get; set; }
         public bool Eliminado { get; set; }
+        public ICollection<CompraDetalle> CompraDetalles { get; set; }
+        public CompraEncabezado()
+        {
+            CompraDetalles = new HashSet<CompraDetalle>();
+        }
 
         public static CompraEncabezado Create(string NumeroFactura, Guid ProveedorId, DateTime FechaSolicitud, DateTime FechaEntrega)
         {

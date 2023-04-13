@@ -110,10 +110,10 @@ namespace Proyecto_Desarrollo_Web.Controllers
         }
 
         [HttpGet]
-        [ClaimRequirement("Producto")]
+        [ClaimRequirement("Categoria")]
         public IActionResult Reporte()
         {
-            var ListaProducto = _context.Producto.Where(w => w.Eliminado == false).ProjectToType<CategoriaVm>().ToList();
+            var ListaProducto = _context.Categoria.Where(w => w.Eliminado == false).ProjectToType<CategoriaVm>().ToList();
             return new ViewAsPdf(ListaProducto);
         }
 

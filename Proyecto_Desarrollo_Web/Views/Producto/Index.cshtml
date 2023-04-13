@@ -4,7 +4,9 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Tablas.css" />
+</head>
 <h1>Producto</h1>
 
 <form asp-action="Insertar" method="get">
@@ -32,7 +34,7 @@
             @Html.ActionLink("PDF", "Reporte", "Producto", new{@class = "btn btn-info"})
         </div>
         <div class="ScrollB">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped my-table">
                 <tread>
                     <tr>
                         <th>Nombre</th>
@@ -53,8 +55,8 @@
                             <td>@item.Precio</td>
                             <td>@item.Proveedor.Nombre</td>
                             <td>
-                                @Html.ActionLink("Editar", "Editar", "Producto", new {@ProductoId = item.ProductoId}, new{@class = "btn btn-info"})
-                                @Html.ActionLink("Eliminar", "Eliminar", "Producto", new {@ProductoId = item.ProductoId}, new{@class = "btn btn-info"})
+                                @Html.ActionLink("Editar", "Editar", "Producto", new {@ProductoId = item.ProductoId}, new{@class = "btn btn-outline-primary"})
+                                @Html.ActionLink("Eliminar", "Eliminar", "Producto", new {@ProductoId = item.ProductoId}, new{@class = "btn btn-outline-danger"})
                             </td>
                         </tr>
                     }

@@ -66,7 +66,7 @@ namespace Proyecto_Desarrollo_Web
                     pattern: "{controller=Login}/{action=Index}/{id?}");
             });
 
-            Rotativa.AspNetCore.RotativaConfiguration.Setup(env.WebRootPath, "../Rotativa");
+            //Rotativa.AspNetCore.RotativaConfiguration.Setup(env.WebRootPath, "../Rotativa");
         }
     }
 }

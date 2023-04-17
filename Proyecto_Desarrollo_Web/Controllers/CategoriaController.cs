@@ -6,6 +6,7 @@ using Proyecto_Desarrollo_Web.Filters;
 using Proyecto_Desarrollo_Web.Models.Domain;
 using Proyecto_Desarrollo_Web.Models.Domain.Entidades;
 using Proyecto_Desarrollo_Web.Models.ViewModel;
+using Rotativa.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,6 +107,14 @@ namespace Proyecto_Desarrollo_Web.Controllers
             RolActual.Delete();
             _context.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        [ClaimRequirement("Categoria")]
+        public IActionResult Reporte()
+        {
+            var ListaProducto = _context.Categoria.Where(w => w.Eliminado == false).ProjectToType<CategoriaVm>().ToList();
+            return new ViewAsPdf(ListaProducto);
         }
 
     }

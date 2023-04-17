@@ -1,15 +1,13 @@
 ﻿@using Proyecto_Desarrollo_Web.Models.ViewModel;
 @model List<ProductoVm>
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Reporte";
+    Layout = null;
 }
-<head>
-    <link rel="stylesheet" type="text/css" href="~/css/Tablas.css" />
-</head>
+
 <h1>Producto</h1>
 
-<form asp-action="Insertar" method="get">
+<form method="get">
     <div class="row">
         <div class="danger">
             @if (TempData["mensaje"] != null)
@@ -24,16 +22,10 @@
 
         </div>
     </div>
-    <div class="form-group">
-        <input type="submit" value="Agregar" class="btn btn-success">
-    </div>
     @if (Model.Count > 0)
     {
-        <div class="form-group">
-            @Html.ActionLink("PDF", "Reporte", "Producto", new{@class = "btn btn-info"})
-        </div>
         <div class="ScrollB">
-            <table class="table table-bordered table-striped my-table">
+            <table class="table table-bordered table-striped">
                 <tread>
                     <tr>
                         <th>Nombre</th>
@@ -41,7 +33,6 @@
                         <th>Cantidad</th>
                         <th>Precio Venta</th>
                         <th>Proveedor</th>
-                        <th>Acciones</th>
                     </tr>
                 </tread>
                 <tbody>
@@ -53,16 +44,11 @@
                             <td>@item.Cantidad</td>
                             <td>@item.Precio</td>
                             <td>@item.Proveedor.Nombre</td>
-                            <td>
-                                @Html.ActionLink("Editar", "Editar", "Producto", new {@ProductoId = item.ProductoId}, new{@class = "btn btn-info"})
-                                @Html.ActionLink("Eliminar", "Eliminar", "Producto", new {@ProductoId = item.ProductoId}, new{@class = "btn btn-info"})
-                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-        <td>@Html.ActionLink("Reporte Pdf","GenerarReportePDF","Producto", null, new {@class = "btn btn-success"})</td>
-        <td>@Html.ActionLink("Reporte Excel","GenerarReporteExcel","Producto",null, new {@class = "btn btn-success"})</td>
     }
 </form>
+

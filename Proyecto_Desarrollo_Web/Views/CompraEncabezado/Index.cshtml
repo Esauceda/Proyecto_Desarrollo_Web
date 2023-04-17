@@ -4,7 +4,9 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Tablas.css" />
+</head>
 <h1>Compras</h1>
 
 <form asp-action="Insertar" method="get">
@@ -19,12 +21,12 @@
                     </button>
                 </div>
             }
-
         </div>
     </div>
 
     <div class="form-group">
-        <input type="submit" value="Agregar" class="btn-success">
+        <input type="submit" value="Agregar" class="btn btn-success">
+
     </div>
     @if (Model.Count > 0)
     {
@@ -49,13 +51,15 @@
                             <td>@item.Proveedor.Nombre</td>
                             <td>
                                 @Html.ActionLink("Editar", "Editar", "CompraEncabezado", new {@CompraEncabezadoId = item.CompraEncabezadoId}, new{@class = "btn btn-info"})
-                                @Html.ActionLink("Eliminar", "Eliminar", "CompraEncabezado", new {@CompraEncabezadoId = item.CompraEncabezadoId}, new{@class = "btn btn-info"})
+                                @Html.ActionLink("Eliminar", "Eliminar", "CompraEncabezado", new {@CompraEncabezadoId = item.CompraEncabezadoId}, new{@class = "btn btn-danger"})
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
+        <td>@Html.ActionLink("Reporte Pdf","GenerarReportePDF","CompraEncabezado", null, new {@class = "btn btn-success"})</td>
+        <td>@Html.ActionLink("Reporte Excel","GenerarReporteExcel","CompraEncabezado",null, new {@class = "btn btn-success"})</td>
     }
 </form>
 

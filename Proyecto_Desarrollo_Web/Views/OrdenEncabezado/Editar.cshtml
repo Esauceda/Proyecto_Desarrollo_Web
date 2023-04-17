@@ -4,7 +4,9 @@
     ViewData["Title"] = "Editar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Tablas.css" />
+</head>
 <div class="container">
     <h1>Editar</h1>
     <div class="row">
@@ -25,8 +27,9 @@
             </div>
             <input asp-for="OrdenEncabezadoId" type="hidden" class="form-control" />
             <div class="form-group">
-                <label for="ClienteId" nam class="control-label">Cliente</label>
-                @Html.DropDownList("ClienteId",Model.Clientes,"Seleccione Cliente", new{@class="form-control"})
+                <label asp-for="Cliente.Nombre" class="control-label"></label>
+                <input asp-for="Cliente.Nombre" class="form-control" readonly />
+                <span asp-validation-for="Cliente.Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Fecha" class="control-label"></label>

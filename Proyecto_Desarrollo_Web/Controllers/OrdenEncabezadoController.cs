@@ -9,6 +9,12 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using Mapster;
+using ClosedXML.Excel;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.IO;
 
 namespace Proyecto_Desarrollo_Web.Controllers
 {
@@ -37,7 +43,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
         [ClaimRequirement("OrdenEncabezado")]
         public IActionResult Index()
         {
-            var ListaCompra = _context.OrdenEncabezado.Where(w => w.Eliminado == false).ProjectToType<OrdenEncabezadoVm>().ToList();
+            var ListaCompra = _context.OrdenEncabezado.Where(w => w.Eliminado == false && w.Fecha == DateTime.Today).ProjectToType<OrdenEncabezadoVm>().ToList();
             return View(ListaCompra);
         }
         [HttpGet]
@@ -147,6 +153,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
         public IActionResult Editar(Guid OrdenEncabezadoId)
         {
             var orden = _context.OrdenDetalle.Where(w => w.OrdenEncabezadoId == OrdenEncabezadoId && w.Eliminado == false).ProjectToType<OrdenEncabezadoVm>().FirstOrDefault();
+
             var listaClientes = _context.Cliente.Where(w => w.Eliminado == false).ProjectToType<ClienteVm>().ToList();
             List<SelectListItem> itemsClientes = listaClientes.ConvertAll(t => {
                 return new SelectListItem()
@@ -208,8 +215,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
 
             var ordenActual = _context.OrdenEncabezado.FirstOrDefault(w => w.OrdenEncabezadoId == neworden.OrdenEncabezadoId);
             ordenActual.Update(
-                neworden.Fecha,
-                neworden.ClienteId
+                neworden.Fecha
 
             );
             _context.SaveChanges();
@@ -240,6 +246,102 @@ namespace Proyecto_Desarrollo_Web.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult GenerarReportePDF()
+        {
+            DataTable tabla = ObtenerDatosReporte();
+
+            using (var stream = new MemoryStream())
+            {
+                // Crear un nuevo documento PDF
+                var documento = new Document();
+                var writer = PdfWriter.GetInstance(documento, stream);
+                documento.Open();
+
+                // Crear una tabla en el documento y agregar las filas
+                var tablaPdf = new PdfPTable(tabla.Columns.Count);
+                tablaPdf.DefaultCell.Border = PdfPCell.NO_BORDER;
+                tablaPdf.TotalWidth = 550f;
+                tablaPdf.LockedWidth = true;
+
+                tablaPdf.DefaultCell.BackgroundColor = new BaseColor(255, 255, 255);
+                tablaPdf.DefaultCell.BorderColor = new BaseColor(0, 0, 0);
+                tablaPdf.DefaultCell.Padding = 10;
+                tablaPdf.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                tablaPdf.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                foreach (DataColumn columna in tabla.Columns)
+                {
+                    var celda = new PdfPCell(new Phrase(columna.ColumnName));
+                    celda.Border = PdfPCell.BOTTOM_BORDER | PdfPCell.TOP_BORDER;
+                    tablaPdf.AddCell(celda);
+                }
+                foreach (DataRow fila in tabla.Rows)
+                {
+                    foreach (DataColumn columna in tabla.Columns)
+                    {
+                        var celda = new PdfPCell(new Phrase(fila[columna].ToString()));
+                        celda.Border = PdfPCell.BOTTOM_BORDER;
+                        tablaPdf.AddCell(celda);
+                    }
+                }
+
+
+                // Agregar la tabla al documento
+                documento.Add(tablaPdf);
+                documento.Close();
+
+                // Devolver el contenido del documento en formato PDF
+                var contenido = stream.ToArray();
+                return File(contenido, "application/pdf", "Ordenes.pdf");
+            }
+        }
+
+        private DataTable ObtenerDatosReporte()
+        {
+            var datos = from p in _context.OrdenDetalle.Include(p => p.OrdenEncabezado).Include(p => p.Producto)
+                        select new
+                        {   
+                            OrdenEncabezadoId = p.OrdenEncabezadoId,
+                            Cliente = p.OrdenEncabezado.Cliente.Nombre,
+                            Fecha = p.OrdenEncabezado.Fecha,
+                            Producto = p.Producto.Nombre,
+                            Precio = p.Precio,
+                            Cantidad = p.Cantidad
+
+                        };
+
+            DataTable tabla = new DataTable();
+            tabla.Columns.Add("Orden Id", typeof(string));
+            tabla.Columns.Add("Cliente", typeof(string));
+            tabla.Columns.Add("Fecha", typeof(DateTime));
+            tabla.Columns.Add("Producto", typeof(string));
+            tabla.Columns.Add("Precio", typeof(string));
+            tabla.Columns.Add("Cantidad", typeof(string));
+            foreach (var d in datos)
+            {
+                tabla.Rows.Add(d.OrdenEncabezadoId, d.Cliente, d.Fecha, d.Producto, d.Precio, d.Cantidad);
+            }
+
+            return tabla;
+        }
+
+        public ActionResult GenerarReporteExcel()
+        {
+            DataTable tabla = ObtenerDatosReporte();
+
+            using (var producto = new XLWorkbook())
+            {
+                var hoja = producto.Worksheets.Add(tabla, "Reporte");
+                hoja.ColumnsUsed().AdjustToContents();
+
+                using (var stream = new MemoryStream())
+                {
+                    producto.SaveAs(stream);
+                    var contenido = stream.ToArray();
+                    return File(contenido, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Ordenes.xlsx");
+                }
+            }
         }
     }
 }

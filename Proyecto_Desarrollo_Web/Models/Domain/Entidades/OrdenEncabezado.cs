@@ -25,10 +25,9 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
                 OrdenEncabezadoId = Guid.NewGuid()
             };
         }
-        public void Update(DateTime Fecha, Guid ClienteId)
+        public void Update(DateTime Fecha)
         {
             this.Fecha = Fecha;
-            this.ClienteId = ClienteId;
 
         }
         public void Delete()

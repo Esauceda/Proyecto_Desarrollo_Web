@@ -11,6 +11,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using Proyecto_Desarrollo_Web.Migrations;
 using Microsoft.EntityFrameworkCore;
+using ClosedXML.Excel;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.Data;
+using System.IO;
 
 namespace Proyecto_Desarrollo_Web.Controllers
 {
@@ -39,7 +44,7 @@ namespace Proyecto_Desarrollo_Web.Controllers
         [ClaimRequirement("CompraEncabezado")]
         public IActionResult Index()
         {
-            var ListaCompra = _context.CompraEncabezado.Where(w => w.Eliminado == false).ProjectToType<CompraEncabezadoVm>().ToList();
+            var ListaCompra = _context.CompraEncabezado.Where(w => w.Eliminado == false && w.FechaEntrega == DateTime.Today).ProjectToType<CompraEncabezadoVm>().ToList();
             return View(ListaCompra);
         }
         [HttpGet]
@@ -117,14 +122,6 @@ namespace Proyecto_Desarrollo_Web.Controllers
             _context.CompraEncabezado.Add(compraEncabezado);
 
             var compraDetalle = new CompraDetalle();
-            /*{
-                ProductoId = newcompra.ProductoId,
-                Precio = newcompra.Precio,
-                Cantidad = newcompra.Cantidad + cantidadexistente,
-                CompraEncabezadoId = compraEncabezado.CompraEncabezadoId
-            };
-            _context.CompraDetalle.Add(compraDetalle);*/
-
             foreach (var ProductoId in productosSeleccionados)
             {
                 var productos = _context.Producto.Find(ProductoId);
@@ -219,10 +216,9 @@ namespace Proyecto_Desarrollo_Web.Controllers
 
             var compraActual = _context.CompraEncabezado.FirstOrDefault(w => w.CompraEncabezadoId == newcompra.CompraEncabezadoId);
             compraActual.Update(
-                newcompra.NumeroFactura,
-                newcompra.ProveedorId,
-                newcompra.FechaSolicitud,
-                newcompra.FechaEntrega
+                newcompra.CompraEncabezado.NumeroFactura,
+                newcompra.CompraEncabezado.FechaSolicitud,
+                newcompra.CompraEncabezado.FechaEntrega
                 
             );
             _context.SaveChanges();
@@ -253,6 +249,104 @@ namespace Proyecto_Desarrollo_Web.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult GenerarReportePDF()
+        {
+            DataTable tabla = ObtenerDatosReporte();
+
+            using (var stream = new MemoryStream())
+            {
+                // Crear un nuevo documento PDF
+                var documento = new Document();
+                var writer = PdfWriter.GetInstance(documento, stream);
+                documento.Open();
+
+                // Crear una tabla en el documento y agregar las filas
+                var tablaPdf = new PdfPTable(tabla.Columns.Count);
+                tablaPdf.DefaultCell.Border = PdfPCell.NO_BORDER;
+                tablaPdf.TotalWidth = 550f;
+                tablaPdf.LockedWidth = true;
+
+                tablaPdf.DefaultCell.BackgroundColor = new BaseColor(255, 255, 255);
+                tablaPdf.DefaultCell.BorderColor = new BaseColor(0, 0, 0);
+                tablaPdf.DefaultCell.Padding = 10;
+                tablaPdf.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                tablaPdf.DefaultCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                foreach (DataColumn columna in tabla.Columns)
+                {
+                    var celda = new PdfPCell(new Phrase(columna.ColumnName));
+                    celda.Border = PdfPCell.BOTTOM_BORDER | PdfPCell.TOP_BORDER;
+                    tablaPdf.AddCell(celda);
+                }
+                foreach (DataRow fila in tabla.Rows)
+                {
+                    foreach (DataColumn columna in tabla.Columns)
+                    {
+                        var celda = new PdfPCell(new Phrase(fila[columna].ToString()));
+                        celda.Border = PdfPCell.BOTTOM_BORDER;
+                        tablaPdf.AddCell(celda);
+                    }
+                }
+
+
+                // Agregar la tabla al documento
+                documento.Add(tablaPdf);
+                documento.Close();
+
+                // Devolver el contenido del documento en formato PDF
+                var contenido = stream.ToArray();
+                return File(contenido, "application/pdf", "Compras.pdf");
+            }
+        }
+
+        private DataTable ObtenerDatosReporte()
+        {
+            var datos = from p in _context.CompraDetalle.Include(p => p.CompraEncabezado).Include(p=> p.Producto)
+                        select new
+                        {
+                            NumeroFactura = p.CompraEncabezado.NumeroFactura,
+                            Proveedor = p.CompraEncabezado.Proveedor.Nombre,
+                            FechaSolicitud = p.CompraEncabezado.FechaSolicitud,
+                            FechaEntrega = p.CompraEncabezado.FechaEntrega,
+                            Producto = p.Producto.Nombre,
+                            Precio = p.Precio,
+                            Cantidad = p.Cantidad
+
+                        };
+
+            DataTable tabla = new DataTable();
+            tabla.Columns.Add("NumeroFactura", typeof(string));
+            tabla.Columns.Add("Proveedor", typeof(string));
+            tabla.Columns.Add("Fecha Solicitud", typeof(DateTime));
+            tabla.Columns.Add("Fecha Entrega", typeof(DateTime));
+            tabla.Columns.Add("Producto", typeof(string));
+            tabla.Columns.Add("Precio", typeof(string));
+            tabla.Columns.Add("Cantidad", typeof(string));
+            foreach (var d in datos)
+            {
+                tabla.Rows.Add(d.NumeroFactura, d.Proveedor, d.FechaSolicitud, d.FechaEntrega, d.Producto, d.Precio, d.Cantidad);
+            }
+
+            return tabla;
+        }
+
+        public ActionResult GenerarReporteExcel()
+        {
+            DataTable tabla = ObtenerDatosReporte();
+
+            using (var producto = new XLWorkbook())
+            {
+                var hoja = producto.Worksheets.Add(tabla, "Reporte");
+                hoja.ColumnsUsed().AdjustToContents();
+
+                using (var stream = new MemoryStream())
+                {
+                    producto.SaveAs(stream);
+                    var contenido = stream.ToArray();
+                    return File(contenido, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Compras.xlsx");
+                }
+            }
         }
     }
 }

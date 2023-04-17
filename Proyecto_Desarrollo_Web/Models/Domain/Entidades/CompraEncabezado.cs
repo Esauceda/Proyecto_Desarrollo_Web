@@ -29,12 +29,12 @@ namespace Proyecto_Desarrollo_Web.Models.Domain.Entidades
                 CompraEncabezadoId = Guid.NewGuid()
             };
         }
-        public void Update(string NumeroFactura, Guid ProveedorId, DateTime FechaSolicitud, DateTime FechaEntrega)
+        public void Update(string NumeroFactura, DateTime FechaSolicitud, DateTime FechaEntrega)
         {
             this.NumeroFactura = NumeroFactura;
             this.FechaSolicitud = FechaSolicitud;
             this.FechaEntrega = FechaEntrega;
-            this.ProveedorId = ProveedorId;
+ 
 
         }
         public void Delete()

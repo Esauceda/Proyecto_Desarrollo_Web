@@ -11,7 +11,7 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
         public Guid ProveedorId { get; set; }
         public ProveedorVm Proveedor { get; set; }
         public List<SelectListItem> Proveedores { get; set; }
-        public DateTime FechaSolicitud { get; set; }
+        public DateTime FechaSolicitud { get; set; } = DateTime.Today;
         public DateTime FechaEntrega { get; set; } = DateTime.Today;
         public string NumeroFactura { get; set; }
 
@@ -36,7 +36,7 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             }
             if (this.ProveedorId == null || this.ProveedorId == Guid.Empty)
             {
-                app.Mensaje += ", el proveedor id no puede estar vacio";
+                app.Mensaje += "El proveedor id no puede estar vacio";
             }
             if (this.FechaSolicitud == null)
             {
@@ -45,6 +45,10 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             if (this.FechaEntrega == null)
             {
                 app.Mensaje += "El campo de fecha de entrega no puede estar vacio";
+            }
+            if (this.FechaEntrega < this.FechaSolicitud)
+            {
+                app.Mensaje += "La fecha de entrega no puede ser antes de la de solicitud";
             }
             if (string.IsNullOrEmpty(app.Mensaje))
             {
@@ -65,26 +69,30 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             {
                 app.Mensaje += "La compra encabezado id no puede estar vacia";
             }
-            if (string.IsNullOrEmpty(this.NumeroFactura))
+            /*if (string.IsNullOrEmpty(this.NumeroFactura))
             {
                 app.Mensaje += "El campo de numero de factura no puede estar vacio";
             }
             if (this.ProveedorId == null || this.ProveedorId == Guid.Empty)
             {
                 app.Mensaje += ", el proveedor id no puede estar vacio";
-            }
-            if (this.FechaSolicitud == null)
+            }*/
+            if (this.CompraEncabezado.FechaSolicitud == null)
             {
                 app.Mensaje += "El campo de fecha de solicitud no puede estar vacio";
             }
-            if (this.FechaEntrega == null)
+            if (this.CompraEncabezado.FechaEntrega == null)
             {
                 app.Mensaje += "El campo de fecha de entrega no puede estar vacio";
+            }
+            if (this.CompraEncabezado.FechaEntrega < this.CompraEncabezado.FechaSolicitud)
+            {
+                app.Mensaje += "La fecha de entrega no puede ser antes de la de solicitud";
             }
             if (string.IsNullOrEmpty(app.Mensaje))
             {
                 app.IsValid = true;
-                app.Mensaje = "Compra encabezado modificado correctamente";
+                app.Mensaje = "Compra modificada correctamente";
             }
             else
             {
@@ -105,7 +113,7 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             if (string.IsNullOrEmpty(app.Mensaje))
             {
                 app.IsValid = true;
-                app.Mensaje = "Compra encabezado eliminado correctamente";
+                app.Mensaje = "Compra eliminado correctamente";
             }
             else
             {

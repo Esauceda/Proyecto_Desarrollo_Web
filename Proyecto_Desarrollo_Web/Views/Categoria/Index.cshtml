@@ -4,8 +4,10 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>Index</h1>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Tablas.css" />
+</head>
+<h1>Categoria</h1>
 
 <form asp-action="Insertar" method="get">
     <div class="row">
@@ -47,7 +49,7 @@
                            
                             <td>
                                 @Html.ActionLink("Editar", "Editar", "Categoria", new {@CategoriaId = item.CategoriaId}, new{@class = "btn btn-info"})
-                                @Html.ActionLink("Eliminar", "Eliminar", "Categoria", new {@CategoriaId = item.CategoriaId}, new{@class = "btn btn-info"})
+                                @Html.ActionLink("Eliminar", "Eliminar", "Categoria", new {@CategoriaId = item.CategoriaId}, new{@class = "btn btn-danger"})
                             </td>
                         </tr>
                     }

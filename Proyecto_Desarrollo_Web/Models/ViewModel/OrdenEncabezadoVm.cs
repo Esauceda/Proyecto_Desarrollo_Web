@@ -9,12 +9,11 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
     {
         public Guid OrdenEncabezadoId { get; set; }
         public Guid ClienteId { get; set; }
-        public ClienteVm Cliente { get; set; }
+        public Cliente Cliente { get; set; }
         public List<SelectListItem> Clientes { get; set; }
         public DateTime Fecha { get; set; } = DateTime.Today;
 
         //Orden Detalle
-        public Guid OrdenDetalleId { get; set; }
         public Guid ProductoId { get; set; }
         public Producto Producto { get; set; }
         public List<SelectListItem> Productos { get; set; }
@@ -54,10 +53,10 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             {
                 app.Mensaje += "La Orden encabezado id no puede estar vacia";
             }
-            if (this.ClienteId == null || this.ClienteId == Guid.Empty)
+            /*if (this.ClienteId == null || this.ClienteId == Guid.Empty)
             {
                 app.Mensaje += "Cliente id no puede estar vacio";
-            }
+            }*/
             if (this.Fecha == null)
             {
                 app.Mensaje += "El campo de fecha no puede estar vacio";
@@ -65,7 +64,7 @@ namespace Proyecto_Desarrollo_Web.Models.ViewModel
             if (string.IsNullOrEmpty(app.Mensaje))
             {
                 app.IsValid = true;
-                app.Mensaje = "Orden ingresada correctamente";
+                app.Mensaje = "Orden modificada correctamente";
             }
             else
             {

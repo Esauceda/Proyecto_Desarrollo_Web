@@ -1,0 +1,117 @@
+﻿@using Proyecto_Desarrollo_Web.Models.ViewModel;
+@model CompraEncabezadoVm
+@{
+    ViewData["Title"] = "BuscarCompra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Buscar Por Fecha</h1>
+
+<form id="frmcompra">
+    <div class="row">
+        <div class="danger">
+            @if (TempData["mensaje"] != null)
+            {
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <p>@TempData["mensaje"]</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="FechaSolicitud" class="control-label"></label>
+        <input asp-for="FechaSolicitud" class="form-control" id="fechaSolicitud" />
+         <label asp-for="FechaEntrega" class="control-label"></label>
+        <input asp-for="FechaEntrega" class="form-control" id="fechaEntrega" />
+        <a href="#" class="btn btn-info" id="generarReporte">Generar Reporte PDF</a>
+        <a href="#" class="btn btn-info" id="generarReporteExcel">Generar Reporte Excel</a>
+        <button type="button" id="btnbuscar">Buscar</button>
+    </div>
+   
+
+    <div class="ScrollB" id="Tabla">
+        <table class="table table-bordered table-striped" id="detalle">
+            <thead>
+                <tr>
+                    <th>Numero de Factura</th>
+                    <th>Fecha de Solicitud</th>
+                    <th>Fecha de Entrega</th>
+                    <th>Proveedor</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <br />
+</form>
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            $('#detalle').hide();
+            $('#btnbuscar').click(function () {
+                var tbl = $('#detalle tbody');
+                $('#detalle').find("tr:gt(0)").remove();
+                var form = $('#frmcompra').serialize();
+                console.log(form);
+                $.ajax({
+                    type: "POST",
+                    url: "BuscarCompra",
+                    data: $('#frmcompra').serialize(),
+                    datatype: "json",
+                    success: function (data) {
+                        console.log(data.value);
+                        alert(data.value.mensaje);
+                        var html = ""
+                        if (data.value.isValid) {
+                            for (i = 0; i < data.value.data.length; i++) {
+                                var FechaEntrega = data.value.data[i].FechaEntrega
+                                html += "<tr>" +
+                                    "<td>" + data.value.data[i].NumeroFactura+ "</td>" +
+                                    "<td>" + data.value.data[i].FechaSolicitud+ "</td>" +
+                                    "<td>" + data.value.data[i].FechaEntrega + "</td>" +
+                                    "<td>" + data.value.data[i].Proveedor.Nombre + "</td>" +
+
+                                    "<td>" + "<a class='btn btn-info' href='/CompraEncabezado/Editar?CompraEncabezadoId=" + data.value.data[i].CompraEncabezadoId + "'>Editar</a>" +
+                                    "<a class='btn btn-info' href='/CompraEncabezado/Eliminar?CompraEncabezadoId=" + data.value.data[i].CompraEncabezadoId + "'>Eliminar</a>" + "</td>"
+                                    + "</tr>";
+
+                            }
+                            $('#detalle').show();
+                            tbl.append(html);
+                        }
+                    }
+                });
+            })
+
+        });
+    </script>
+<script>
+    $(function() {
+        $('#generarReporte').on('click', function() {
+            var fechaSolicitud = $('#fechaSolicitud').val();
+            var fechaEntrega = $('#fechaEntrega').val();
+                var url = '@Url.Action("GenerarReportePDF", "CompraEncabezado")?fechaSolicitud=' + fechaSolicitud + '&fechaEntrega=' + fechaEntrega;
+            $(this).attr('href', url);
+        });
+    });
+</script>
+    <script>
+        $(function() {
+            $('#generarReporteExcel').on('click', function() {
+                var fechaSolicitud = $('#fechaSolicitud').val();
+                var fechaEntrega = $('#fechaEntrega').val();
+
+                var url = '@Url.Action("GenerarReporteExcel", "CompraEncabezado")?fechaSolicitud=' + fechaSolicitud + '&fechaEntrega=' + fechaEntrega;
+                $(this).attr('href', url);
+            });
+        });
+    </script>
+}
+

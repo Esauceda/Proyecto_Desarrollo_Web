@@ -248,9 +248,25 @@ namespace Proyecto_Desarrollo_Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult GenerarReportePDF()
+        [HttpGet]
+        [ClaimRequirement("OrdenEncabezado")]
+        public IActionResult BuscarOrden()
         {
-            DataTable tabla = ObtenerDatosReporte();
+            var vm = new OrdenEncabezadoVm();
+            return View(vm);
+        }
+        [HttpPost]
+        [ClaimRequirement("OrdenEncabezado")]
+        public JsonResult BuscarOrden([FromForm] OrdenEncabezadoVm vm)
+        {
+            var orden = _context.OrdenEncabezado.Where(w => w.Eliminado == false && w.Fecha == vm.Fecha).ProjectToType<OrdenEncabezadoVm>().ToList();
+            var result = orden == null ? AppResult.NoSucces("No se encontro orden en estas fechas") : AppResult.Succes("Orden existente", orden);
+            return new JsonResult(Ok(result));
+        }
+
+        public ActionResult GenerarReportePDF(DateTime fecha)
+        {
+            DataTable tabla = ObtenerDatosReporte(fecha);
 
             using (var stream = new MemoryStream())
             {
@@ -297,14 +313,14 @@ namespace Proyecto_Desarrollo_Web.Controllers
             }
         }
 
-        private DataTable ObtenerDatosReporte()
+        private DataTable ObtenerDatosReporte(DateTime vm)
         {
-            var datos = from p in _context.OrdenDetalle.Include(p => p.OrdenEncabezado).Include(p => p.Producto)
+            var datos = from p in _context.OrdenDetalle.Where(p => p.Eliminado == false && p.OrdenEncabezado.Fecha.Date == vm.Date).Include(p => p.Producto)
                         select new
                         {   
                             OrdenEncabezadoId = p.OrdenEncabezadoId,
                             Cliente = p.OrdenEncabezado.Cliente.Nombre,
-                            Fecha = p.OrdenEncabezado.Fecha,
+                            Fecha = p.OrdenEncabezado.Fecha, 
                             Producto = p.Producto.Nombre,
                             Precio = p.Precio,
                             Cantidad = p.Cantidad
@@ -326,9 +342,9 @@ namespace Proyecto_Desarrollo_Web.Controllers
             return tabla;
         }
 
-        public ActionResult GenerarReporteExcel()
+        public ActionResult GenerarReporteExcel(DateTime fecha)
         {
-            DataTable tabla = ObtenerDatosReporte();
+            DataTable tabla = ObtenerDatosReporte(fecha);
 
             using (var producto = new XLWorkbook())
             {

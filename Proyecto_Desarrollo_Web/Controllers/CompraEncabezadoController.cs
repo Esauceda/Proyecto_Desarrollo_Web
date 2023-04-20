@@ -251,9 +251,25 @@ namespace Proyecto_Desarrollo_Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult GenerarReportePDF()
+        [HttpGet]
+        [ClaimRequirement("CompraEncabezado")]
+        public IActionResult BuscarCompra()
         {
-            DataTable tabla = ObtenerDatosReporte();
+            var vm = new CompraEncabezadoVm();
+            return View(vm);
+        }
+        [HttpPost]
+        [ClaimRequirement("CompraEncabezado")]
+        public JsonResult BuscarCompra([FromForm] CompraEncabezadoVm vm)
+        {
+            var compra = _context.CompraEncabezado.Where(w => w.Eliminado == false && w.FechaEntrega == vm.FechaEntrega).ProjectToType<CompraEncabezadoVm>().ToList();
+            var result = compra == null ? AppResult.NoSucces("No se encontro compra en estas fechas") : AppResult.Succes("Compra(s) existente", compra);
+            return new JsonResult(Ok(result));
+        }
+
+        public ActionResult GenerarReportePDF(DateTime fechaSolicitud, DateTime fechaEntrega)
+        {
+            DataTable tabla = ObtenerDatosReporte(fechaSolicitud, fechaEntrega);
 
             using (var stream = new MemoryStream())
             {
@@ -299,10 +315,11 @@ namespace Proyecto_Desarrollo_Web.Controllers
                 return File(contenido, "application/pdf", "Compras.pdf");
             }
         }
-
-        private DataTable ObtenerDatosReporte()
+        
+        private DataTable ObtenerDatosReporte(DateTime vm, DateTime vm2)
         {
-            var datos = from p in _context.CompraDetalle.Include(p => p.CompraEncabezado).Include(p=> p.Producto)
+
+            var datos = from p in _context.CompraDetalle.Where(p => p.Eliminado == false && p.CompraEncabezado.FechaSolicitud >= vm && p.CompraEncabezado.FechaEntrega <= vm2).Include(p=> p.Producto)
                         select new
                         {
                             NumeroFactura = p.CompraEncabezado.NumeroFactura,
@@ -331,9 +348,9 @@ namespace Proyecto_Desarrollo_Web.Controllers
             return tabla;
         }
 
-        public ActionResult GenerarReporteExcel()
+        public ActionResult GenerarReporteExcel(DateTime fechaSolicitud, DateTime fechaEntrega)
         {
-            DataTable tabla = ObtenerDatosReporte();
+            DataTable tabla = ObtenerDatosReporte(fechaSolicitud, fechaEntrega);
 
             using (var producto = new XLWorkbook())
             {

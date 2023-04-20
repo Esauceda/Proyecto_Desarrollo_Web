@@ -54,8 +54,11 @@
                 </tbody>
             </table>
         </div>
-        <td>@Html.ActionLink("Reporte Pdf","GenerarReportePDF","OrdenEncabezado", null, new {@class = "btn btn-success"})</td>
-        <td>@Html.ActionLink("Reporte Excel","GenerarReporteExcel","OrdenEncabezado",null, new {@class = "btn btn-success"})</td>
+
     }
+
+    <td>@Html.ActionLink("Buscar por fecha","BuscarOrden","OrdenEncabezado", null, new {@class = "btn btn-info"})</td>
+    <td>@Html.ActionLink("Reporte Pdf","GenerarReportePDF","OrdenEncabezado", null, new {@class = "btn btn-success"})</td>
+    <td>@Html.ActionLink("Reporte Excel","GenerarReporteExcel","OrdenEncabezado",null, new {@class = "btn btn-success"})</td>
 </form>
 
